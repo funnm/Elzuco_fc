@@ -1,0 +1,79 @@
+body {
+    background-color: #f5f5f5;
+}
+
+/* Barra superior */
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* Cabecera tipo hero */
+.hero {
+    background: linear-gradient(135deg, #111827, #1f2937);
+    color: #fff;
+    padding: 2.5rem 1.5rem;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+}
+
+.hero h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.hero p {
+    margin-bottom: 0.75rem;
+    opacity: 0.9;
+}
+
+/* Tarjetas de noticias */
+.post-card img {
+    object-fit: cover;
+    height: 180px;
+}
+
+.post-meta {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+/* Sidebar izquierda */
+.sidebar-box {
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.sidebar-box h5 {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    border-left: 4px solid #2563eb;
+    padding-left: 0.5rem;
+}
+
+/* Tabla de resultados */
+.table-results thead {
+    background-color: #111827;
+    color: #fff;
+}
+
+.badge-ganado {
+    background-color: #16a34a;
+}
+
+.badge-empatado {
+    background-color: #6b7280;
+}
+
+.badge-perdido {
+    background-color: #dc2626;
+}
+
+/* Footer */
+footer {
+    font-size: 0.9rem;
+    color: #6b7280;
+}
