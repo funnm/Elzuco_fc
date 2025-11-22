@@ -184,6 +184,29 @@ const partidosHexagonal = [
     }
 ];
 
+// =========================================
+// 1.b JSON de NOVEDADES (se configura aquí)
+// =========================================
+
+const novedadesHexagonal = [
+    {
+        titulo: "Deportivo Cuenca firma una goleada ante El Nacional",
+        fechaTexto: "Hoy · ELZUCO_FC",
+        imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFTm00drhc2jsko2jXAToqqax5cXa0Xf-ipw&s",
+        texto:
+            "Dep. Cuenca venció 5–0 a El Nacional y se hizo fuerte en el Serrano Aguilar, uno de los marcadores más amplios de la fecha de LigaPro Ecuabet.",
+        tags: ["#DepCuenca", "#LigaProEcuabet"]
+    },
+    {
+        titulo: "Empate con sabor a poco entre U. Católica y Libertad FC",
+        fechaTexto: "Hoy · ELZUCO_FC",
+        imagen: "https://imagenes.primicias.ec/files/og_thumbnail/uploads/2024/05/26/6653554931ade.jpeg",
+        texto:
+            "Universidad Católica y Libertad FC igualaron 1–1 en el Olímpico Atahualpa. Los locales tuvieron opciones para ganar, pero no concretaron al final.",
+        tags: ["#UCatólica", "#LibertadFC"]
+    }
+];
+
 // ==================================
 // 2. Lógica de separación y pintado
 // ==================================
@@ -202,6 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderUltimoResultado(partidosJugados);
     renderTablaResultados(partidosJugados);
     renderProximasFechas(partidosProximos);
+    renderNovedades(novedadesHexagonal);
 });
 
 // ===================
@@ -305,5 +329,40 @@ function renderProximasFechas(partidosProximos) {
       <small>${partido.fechaTexto} · ${partido.hora} · ${partido.estadio}</small>
     `;
         lista.appendChild(li);
+    });
+}
+
+// ===================
+// Novedades (cards)
+// ===================
+function renderNovedades(novedades) {
+    const contenedor = document.getElementById("contenedor-novedades");
+    if (!contenedor) return;
+
+    contenedor.innerHTML = "";
+
+    novedades.forEach((item) => {
+        const col = document.createElement("div");
+        col.className = "col-md-6";
+
+        const tagsHTML = (item.tags || [])
+            .map((t) => `<span class="badge bg-dark me-1">${t}</span>`)
+            .join("");
+
+        col.innerHTML = `
+      <div class="card post-card h-100 shadow-sm">
+        <img src="${item.imagen}" class="card-img-top" alt="${item.titulo}">
+        <div class="card-body">
+          <h3 class="h5 card-title">${item.titulo}</h3>
+          <p class="post-meta mb-2">${item.fechaTexto}</p>
+          <p class="card-text">${item.texto}</p>
+        </div>
+        <div class="card-footer d-flex justify-content-start">
+          ${tagsHTML}
+        </div>
+      </div>
+    `;
+
+        contenedor.appendChild(col);
     });
 }
