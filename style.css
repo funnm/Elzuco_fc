@@ -1,63 +1,98 @@
+/* ================================
+   ESTILOS GENERALES
+=================================== */
+
 body {
-    background-color: #f5f5f5;
+    background-color: #f3f4f6;
+    font-family: "Inter", sans-serif;
+    color: #1f2937;
 }
 
-/* Barra superior */
+/* ================================
+   NAVBAR
+=================================== */
+
+.navbar {
+    padding: 0.8rem 1rem;
+}
+
 .navbar-brand {
     font-weight: 700;
+    text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-/* Cabecera tipo hero */
+.nav-link {
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    color: #60a5fa !important;
+}
+
+/* ================================
+   SECCIÓN HERO
+=================================== */
+
 .hero {
-    background: linear-gradient(135deg, #111827, #1f2937);
+    background: linear-gradient(135deg, #0f172a, #1e293b);
     color: #fff;
     padding: 2.5rem 1.5rem;
     border-radius: 1rem;
-    margin-bottom: 2rem;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
 .hero h1 {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
+    font-size: 2.1rem;
+    font-weight: 700;
 }
 
 .hero p {
-    margin-bottom: 0.75rem;
     opacity: 0.9;
+    margin-bottom: 0.5rem;
 }
 
-/* Tarjetas de noticias */
-.post-card img {
-    object-fit: cover;
-    height: 180px;
-}
+/* ================================
+   SIDEBAR IZQUIERDO
+=================================== */
 
-.post-meta {
-    font-size: 0.85rem;
-    color: #6b7280;
-}
-
-/* Sidebar izquierda */
 .sidebar-box {
     background-color: #ffffff;
     border-radius: 0.75rem;
     padding: 1.25rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    margin-bottom: 1.2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .sidebar-box h5 {
     font-size: 1rem;
+    font-weight: 600;
     margin-bottom: 0.75rem;
     border-left: 4px solid #2563eb;
     padding-left: 0.5rem;
 }
 
-/* Tabla de resultados */
+/* enlaces sidebar */
+.sidebar-box a {
+    color: #1f2937;
+    font-weight: 500;
+}
+
+.sidebar-box a:hover {
+    color: #2563eb;
+}
+
+/* ================================
+   RESULTADOS (TABLA)
+=================================== */
+
 .table-results thead {
     background-color: #111827;
     color: #fff;
+}
+
+.table-results tbody tr:hover {
+    background-color: #f1f5f9;
 }
 
 .badge-ganado {
@@ -72,8 +107,80 @@ body {
     background-color: #dc2626;
 }
 
-/* Footer */
+/* ================================
+   CARD ÚLTIMO RESULTADO
+=================================== */
+
+#card-ultimo-resultado .card {
+    border-radius: 0.75rem;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+#card-ultimo-resultado .card-footer {
+    background-color: #f9fafb;
+}
+
+/* ================================
+   NOVEDADES (CARDS)
+=================================== */
+
+.post-card {
+    border: none;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    transition: all 0.15s ease-in-out;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.post-card img {
+    height: 170px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.post-meta {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+/* tags */
+.card-footer .badge {
+    padding: 0.45rem 0.6rem;
+    font-size: 0.75rem;
+}
+
+/* ================================
+   FOOTER
+=================================== */
+
 footer {
+    background-color: #ffffff;
+    padding: 1rem;
+    color: #6b7280;
     font-size: 0.9rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+/* ================================
+   UTILIDADES EXTRA
+=================================== */
+
+img {
+    user-select: none;
+}
+
+h2,
+h3 {
+    font-weight: 700;
+}
+
+small {
     color: #6b7280;
 }
