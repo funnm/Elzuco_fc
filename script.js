@@ -234,7 +234,7 @@ const partidosHexagonal = [
 const novedadesHexagonal = [
     {
         titulo: "Deportivo Cuenca firma una goleada ante El Nacional",
-        fechaTexto: "Esta semana · ELZUCO_FC",
+        fechaTexto: "2025-11-20 · ELZUCO_FC",
         imagen:
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFTm00drhc2jsko2jXAToqqax5cXa0Xf-ipw&s",
         textoCorto:
@@ -248,7 +248,7 @@ const novedadesHexagonal = [
     },
     {
         titulo: "Empate con sabor a poco entre U. Católica y Libertad FC",
-        fechaTexto: "Esta semana · ELZUCO_FC",
+        fechaTexto: "2025-11-19 · ELZUCO_FC",
         imagen:
             "https://imagenes.primicias.ec/files/og_thumbnail/uploads/2024/05/26/6653554931ade.jpeg",
         textoCorto:
@@ -262,7 +262,7 @@ const novedadesHexagonal = [
     },
     {
         titulo: "Aucas sorprende y se lleva los puntos del Capwell",
-        fechaTexto: "Hoy · ELZUCO_FC",
+        fechaTexto: "2025-11-22 · ELZUCO_FC",
         imagen:
             "https://imagenes.primicias.ec/files/image_480_270/files/fp/uploads/2025/10/19/68f5547777f67.r_d.1518-924-1601.jpeg",
         textoCorto:
