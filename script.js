@@ -276,7 +276,7 @@ const novedadesHexagonal = [
     },
     {
         titulo: "Barcelona SC se mantiene en carrera tras ganar en Machala",
-        fechaTexto: "Esta semana · ELZUCO_FC",
+        fechaTexto: "2025-11-09 · ELZUCO_FC",
         imagen:
             "https://www.eluniverso.com/resizer/v2/2QOTQSEKPFHZ5PAW4UHSFJZJKI.jpg?auth=48c72064ac2d907061ad9b7c9763cdb4c36411ab679619915548404152573f7d&width=1024&height=670&quality=75&smart=true",
         textoCorto:
