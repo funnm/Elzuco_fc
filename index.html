@@ -3,19 +3,54 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Blog de Resultados | ELZUCO_FC</title>
+    <title>Resultados LigaPro Ecuador | Noticias y Estadísticas | ELZUCO_FC</title>
+
+    <!-- SEO -->
+    <meta name="description"
+        content="Resultados oficiales, estadísticas, análisis y novedades de la LigaPro Ecuabet. Actualizaciones diarias del Hexagonal por el título. Noticias creadas por ELZUCO_FC." />
+    <meta name="keywords"
+        content="LigaPro, fútbol ecuatoriano, resultados LigaPro, ELZUCO_FC, hexagonales, fútbol Ecuador, Ecuabet, estadísticas fútbol" />
+    <meta name="author" content="ELZUCO_FC" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Vista Móvil -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Canonical (evita contenido duplicado) -->
+    <link rel="canonical" href="https://elzucofc.lat/" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="logo.png" type="image/png" />
+    <link rel="apple-touch-icon" href="logo.png" />
+
+    <!-- Open Graph (Facebook / WhatsApp / Instagram) -->
+    <meta property="og:title" content="Resultados del fútbol ecuatoriano | ELZUCO_FC" />
+    <meta property="og:description"
+        content="Resultados actualizados, estadísticas y novedades del fútbol ecuatoriano. Información diaria de la LigaPro." />
+    <meta property="og:image" content="https://elzucofc.lat/img/portada.png" />
+    <meta property="og:url" content="https://elzucofc.lat/" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Resultados LigaPro Ecuador | ELZUCO_FC" />
+    <meta name="twitter:description" content="Noticias, resultados, análisis y estadísticas del fútbol ecuatoriano." />
+    <meta name="twitter:image" content="https://elzucofc.lat/img/portada.png" />
+
+    <!-- Google Ads -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5153356459824383"
         crossorigin="anonymous"></script>
     <meta name="google-adsense-account" content="ca-pub-5153356459824383">
+
     <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
-    <!-- Tus estilos -->
+    <!-- Estilos -->
     <link rel="stylesheet" href="style.css" />
+
 </head>
 
 <body>
@@ -131,7 +166,13 @@
                     <div class="row g-3" id="contenedor-novedades">
                         <!-- JS generará todo aquí -->
                     </div>
+
+                    <p class="mt-3 small text-muted">
+                        ¿Quieres más novedades? Síguenos en nuestras redes:
+                        <strong>@elzuco_fc</strong> en Instagram, Facebook, YouTube y Twitch.
+                    </p>
                 </section>
+
 
             </section>
         </div>
@@ -144,6 +185,26 @@
             <p class="mb-0 small">#LigaProEcuabet · #Hexagonales</p>
         </div>
     </footer>
+    <!-- Modal para "Leer más" de novedades -->
+    <div class="modal fade" id="modalNovedad" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalNovedadTitulo"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small mb-2" id="modalNovedadFecha"></p>
+                    <img id="modalNovedadImagen" src="" alt="" class="img-fluid rounded mb-3" />
+                    <p id="modalNovedadTexto"></p>
+                </div>
+                <div class="modal-footer">
+                    <small class="me-auto">Más contenido en @elzuco_fc</small>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
