@@ -1,12 +1,65 @@
 // =========================================
-// 1. JSON de TODOS los partidos (pasados y futuros)
+// 1. JSON de TODOS los partidos LigaPro (pasados y futuros)
 // =========================================
 //
 // jugado: true  -> ya tiene resultado
 // jugado: false -> aún no se juega (se muestra en "Próximas fechas")
 
 const partidosHexagonal = [
-    // ✅ PARTIDOS MÁS RECIENTES (incluye los de hoy)
+    // ✅ PARTIDOS MÁS RECIENTES (INCLUYE LOS DE HOY)
+
+    {
+        fechaISO: "2025-11-23",
+        fechaTexto: "2025-11-23",
+        hora: "18:00",
+        torneo: "LigaPro Ecuabet",
+        estadio: "Banco Guayaquil",
+        local: "Independiente del Valle",
+        visitante: "Orense FC",
+        golesLocal: 0,
+        golesVisitante: 0,
+        estadoTipo: "empatado",
+        estadoTexto: "Empate",
+        jugado: true,
+        resumen:
+            "Independiente del Valle y Orense FC igualaron 0–0 en Sangolquí, en un juego cerrado donde las defensas se impusieron sobre los ataques."
+    },
+
+    {
+        fechaISO: "2025-11-23",
+        fechaTexto: "2025-11-23",
+        hora: "15:30",
+        torneo: "LigaPro Ecuabet",
+        estadio: "Monumental Banco Pichincha",
+        local: "Barcelona SC",
+        visitante: "LDU Quito",
+        golesLocal: 2,
+        golesVisitante: 2,
+        estadoTipo: "empatado",
+        estadoTexto: "Empate",
+        jugado: true,
+        resumen:
+            "Barcelona SC y Liga de Quito protagonizaron un partidazo 2–2 en el Monumental, con emociones en ambas áreas y reparto de puntos."
+    },
+
+    {
+        fechaISO: "2025-11-23",
+        fechaTexto: "2025-11-23",
+        hora: "13:00",
+        torneo: "LigaPro Ecuabet",
+        estadio: "Bellavista",
+        local: "Macará",
+        visitante: "Delfín",
+        golesLocal: 3,
+        golesVisitante: 0,
+        estadoTipo: "ganado",
+        estadoTexto: "Ganó Macará",
+        jugado: true,
+        resumen:
+            "Macará fue contundente en Ambato y venció 3–0 a Delfín, aprovechando su efectividad en el área rival para quedarse con los tres puntos."
+    },
+
+    // ✅ PARTIDOS RECIENTES
 
     {
         fechaISO: "2025-11-22",
@@ -57,8 +110,7 @@ const partidosHexagonal = [
             "Manta FC derrotó 3–1 a Vinotinto con una actuación sólida en ataque, controlando el juego y cerrando una jornada positiva ante su afición."
     },
 
-
-    // ✅ PARTIDOS RECIENTES
+    // ✅ RESULTADOS ANTERIORES
 
     {
         fechaISO: "2025-11-20",
@@ -76,7 +128,6 @@ const partidosHexagonal = [
         resumen:
             "Deportivo Cuenca pasó por encima de El Nacional con un contundente 5–0 en el Serrano Aguilar, firmando una noche perfecta ante su hinchada."
     },
-
     {
         fechaISO: "2025-11-19",
         fechaTexto: "2025-11-19",
@@ -93,9 +144,6 @@ const partidosHexagonal = [
         resumen:
             "Universidad Católica y Libertad FC igualaron 1–1 en Quito en un partido muy parejo y disputado, con un gol para cada tiempo."
     },
-
-    // ✅ RESULTADOS ANTERIORES
-
     {
         fechaISO: "2025-11-10",
         fechaTexto: "2025-11-10",
@@ -191,47 +239,151 @@ const partidosHexagonal = [
         jugado: true,
         resumen:
             "Universidad Católica sorprendió y derrotó 0–2 a Independiente del Valle como visitante."
+    }
+
+    // 🔮 Si más adelante quieres agregar nuevas fechas de LigaPro,
+    // puedes seguir usando este mismo arreglo con jugado: false.
+];
+
+// =========================================
+// 1.b Partidos COPA ECUADOR
+// =========================================
+
+const partidosCopaEcuador = [
+    // ✅ RESULTADOS RECIENTES
+
+    {
+        fechaISO: "2025-11-17",
+        fechaTexto: "2025-11-17",
+        hora: "19:00",
+        torneo: "Copa Ecuador",
+        fase: "Semifinal · Partido 1 de 2",
+        estadio: "George Capwell",
+        local: "Emelec",
+        visitante: "LDU Quito",
+        golesLocal: 1,
+        golesVisitante: 2,
+        estadoTipo: "perdido",
+        estadoTexto: "Ganó LDU Quito",
+        jugado: true,
+        resumen:
+            "LDU Quito se llevó un valioso triunfo 1–2 del Capwell en la ida de semifinales de la Copa Ecuador."
     },
 
     // 🔮 PRÓXIMOS PARTIDOS
 
     {
-        fechaISO: "2025-11-30",
-        fechaTexto: "2025-11-30",
-        hora: "13:00",
-        torneo: "LigaPro Ecuabet",
-        estadio: "Bellavista",
-        local: "Macará",
-        visitante: "Delfín",
+        fechaISO: "2025-11-25",
+        fechaTexto: "2025-11-25",
+        hora: "19:00",
+        torneo: "Copa Ecuador",
+        fase: "Semifinal · Partido 1 de 2",
+        estadio: "Olímpico Atahualpa",
+        local: "U. Católica",
+        visitante: "Cuenca Juniors",
         jugado: false
     },
     {
-        fechaISO: "2025-11-30",
-        fechaTexto: "2025-11-30",
-        hora: "15:30",
+        fechaISO: "2025-11-29",
+        fechaTexto: "2025-11-29",
+        hora: "14:00",
         torneo: "LigaPro Ecuabet",
-        estadio: "Monumental Banco Pichincha",
-        local: "Barcelona SC",
-        visitante: "LDU Quito",
+        fase: "Fase de grupos · Jornada 6",
+        estadio: "Por confirmar",
+        local: "Vinotinto",
+        visitante: "Mushuc Runa",
         jugado: false
     },
     {
-        fechaISO: "2025-11-30",
-        fechaTexto: "2025-11-30",
-        hora: "18:00",
+        fechaISO: "2025-11-29",
+        fechaTexto: "2025-11-29",
+        hora: "14:00",
         torneo: "LigaPro Ecuabet",
+        fase: "Fase de grupos · Jornada 6",
+        estadio: "Por",
+        local: "Técnico Universitario",
+        visitante: "Manta",
+        jugado: false
+    },
+    {
+        fechaISO: "2025-12-02",
+        fechaTexto: "2025-12-02",
+        hora: "19:00",
+        torneo: "Copa Ecuador",
+        fase: "Semifinal · Partido 2 de 2",
+        estadio: "Alejandro Serrano Aguilar",
+        local: "Cuenca Juniors",
+        visitante: "U. Católica",
+        jugado: false
+    },
+    {
+        fechaISO: "2025-12-03",
+        fechaTexto: "2025-12-03",
+        hora: "19:00",
+        torneo: "Copa Ecuador",
+        fase: "Semifinal · Partido 2 de 2",
+        estadio: "Rodrigo Paz Delgado",
+        local: "LDU Quito",
+        visitante: "Emelec",
+        jugado: false
+    },
+    {
+        fechaISO: "2025-12-10",
+        fechaTexto: "2025-12-10",
+        hora: "17:00",
+        torneo: "Copa Ecuador",
+        fase: "Fase de grupos · Jornada 3",
         estadio: "Banco Guayaquil",
         local: "Independiente del Valle",
-        visitante: "Orense",
+        visitante: "LDU Quito",
         jugado: false
     }
 ];
 
 // =========================================
-// 1.b JSON de NOVEDADES
+// 1.c JSON de NOVEDADES
 // =========================================
 
 const novedadesHexagonal = [
+    {
+        titulo: "Macará golea a Delfín y se hace fuerte en casa",
+        fechaTexto: "2025-11-23 · ELZUCO_FC",
+        imagen:
+            "https://studiofutbol.com.ec/wp-content/uploads/2025/11/20251123199547-fbl-liga-ecuabet-macara-delfin-1068x763.jpg",
+        textoCorto:
+            "Macará superó 3–0 a Delfín en Ambato y sumó una victoria clave en el Hexagonal por el título.",
+        textoLargo:
+            "En el estadio Bellavista, Macará fue ampliamente superior a Delfín y lo derrotó 3–0 con una actuación muy sólida en todas sus líneas. " +
+            "El cuadro ambateño dominó el trámite del encuentro, generó las ocasiones más claras y no perdonó frente al arco rival. " +
+            "Con este resultado, Macará se mantiene en la pelea dentro del Hexagonal por el título y deja buenas sensaciones de cara a las próximas jornadas.",
+        tags: ["#Macará", "#LigaProEcuabet"]
+    },
+    {
+        titulo: "Empate vibrante entre Barcelona SC y Liga de Quito",
+        fechaTexto: "2025-11-23 · ELZUCO_FC",
+        imagen:
+            "https://www.eluniverso.com/resizer/v2/RFOJZID7PRHSJFA6YFO2C3DLFY.jpg?auth=24dab98a477fc9a4b95c98e5218cc98ebf38445c3e391c99f29a5f58cfbcbb74&width=1005&height=670&quality=75&smart=true",
+        textoCorto:
+            "Barcelona SC y LDU Quito empataron 2–2 en el Monumental en un duelo intenso y cargado de emociones.",
+        textoLargo:
+            "Barcelona Sporting Club y Liga Deportiva Universitaria de Quito protagonizaron un partido vibrante en el estadio Monumental. " +
+            "El encuentro terminó 2–2 con ocasiones para ambos, golazos y polémicas, dejando la sensación de que cualquiera pudo llevarse la victoria. " +
+            "Con el empate, ambos equipos suman en la tabla del Hexagonal, pero siguen obligados a no ceder terreno en las fechas que restan.",
+        tags: ["#BarcelonaSC", "#LDUQuito"]
+    },
+    {
+        titulo: "Cero goles pero mucha lucha entre IDV y Orense",
+        fechaTexto: "2025-11-23 · ELZUCO_FC",
+        imagen:
+            "https://www.eluniverso.com/resizer/v2/MW7CH4PE4NAR5MZIASQH3WKURI.jpg?auth=594911d57d5ba23c623cd1170cf13c8b48ee41038e176baf26509bf3110c9031&width=871&height=670&quality=75&smart=true",
+        textoCorto:
+            "Independiente del Valle y Orense FC igualaron 0–0 en Sangolquí en un partido cerrado y muy táctico.",
+        textoLargo:
+            "En el estadio Banco Guayaquil, Independiente del Valle y Orense FC empataron sin goles en un compromiso de mucha intensidad defensiva. " +
+            "IDV llevó la iniciativa, pero Orense se defendió con orden y supo cerrar los espacios. " +
+            "El reparto de puntos deja al conjunto negriazul con la sensación de haber dejado escapar una oportunidad para escalar en la tabla.",
+        tags: ["#IDV", "#OrenseFC"]
+    },
     {
         titulo: "Deportivo Cuenca firma una goleada ante El Nacional",
         fechaTexto: "2025-11-20 · ELZUCO_FC",
@@ -246,48 +398,6 @@ const novedadesHexagonal = [
             "La hinchada celebró a lo grande el rendimiento del equipo y ya piensa en los próximos duelos decisivos de la LigaPro Ecuabet.",
         tags: ["#DepCuenca", "#LigaProEcuabet"]
     },
-    {
-        titulo: "Empate con sabor a poco entre U. Católica y Libertad FC",
-        fechaTexto: "2025-11-19 · ELZUCO_FC",
-        imagen:
-            "https://imagenes.primicias.ec/files/og_thumbnail/uploads/2024/05/26/6653554931ade.jpeg",
-        textoCorto:
-            "Universidad Católica y Libertad FC igualaron 1–1 en el Olímpico Atahualpa. Los locales tuvieron opciones claras para ganar.",
-        textoLargo:
-            "Universidad Católica y Libertad FC empataron 1–1 en el estadio Olímpico Atahualpa, en un compromiso muy parejo pero con mayor iniciativa del cuadro local. " +
-            "La Católica generó varias situaciones de peligro, pero careció de efectividad en los metros finales. " +
-            "Libertad, por su parte, fue ordenado tácticamente y aprovechó una contra para marcar. " +
-            "El resultado deja la sensación de haber perdido dos puntos para los capitalinos, mientras que el conjunto lojano se va conforme con el empate fuera de casa.",
-        tags: ["#UCatólica", "#LibertadFC"]
-    },
-    {
-        titulo: "Aucas sorprende y se lleva los puntos del Capwell",
-        fechaTexto: "2025-11-22 · ELZUCO_FC",
-        imagen:
-            "https://imagenes.primicias.ec/files/image_480_270/files/fp/uploads/2025/10/19/68f5547777f67.r_d.1518-924-1601.jpeg",
-        textoCorto:
-            "Aucas venció 0–2 a Emelec como visitante y se mete de lleno en la pelea por el Hexagonal por el título.",
-        textoLargo:
-            "El Club Deportivo Aucas consiguió una importantísima victoria 0–2 ante Emelec en el estadio George Capwell. " +
-            "El cuadro oriental mostró personalidad para jugar en Guayaquil, supo aguantar los momentos de presión eléctrica y golpeó en los instantes justos. " +
-            "Emelec intentó reaccionar, pero se encontró con una defensa bien parada y un arquero seguro. " +
-            "Con este triunfo, Aucas suma puntos de oro y manda un mensaje claro de que será un rival durísimo en la definición del campeonato.",
-        tags: ["#Aucas", "#Emelec"]
-    },
-    {
-        titulo: "Barcelona SC se mantiene en carrera tras ganar en Machala",
-        fechaTexto: "2025-11-09 · ELZUCO_FC",
-        imagen:
-            "https://www.eluniverso.com/resizer/v2/2QOTQSEKPFHZ5PAW4UHSFJZJKI.jpg?auth=48c72064ac2d907061ad9b7c9763cdb4c36411ab679619915548404152573f7d&width=1024&height=670&quality=75&smart=true",
-        textoCorto:
-            "Barcelona SC derrotó 1–2 a Orense y sigue firme en la lucha por el título en la LigaPro Ecuabet.",
-        textoLargo:
-            "Barcelona Sporting Club consiguió una victoria trabajada por 1–2 ante Orense en Machala. " +
-            "El Ídolo del Astillero mostró oficio para manejar los tiempos del partido y aprovechar su jerarquía individual en ataque. " +
-            "Orense complicó por momentos y hasta tuvo opciones para empatar, pero no estuvo fino en la definición. " +
-            "El triunfo permite a Barcelona mantenerse entre los punteros del Hexagonal, manteniendo viva la ilusión de pelear el campeonato hasta el final.",
-        tags: ["#BarcelonaSC", "#Orense"]
-    }
 ];
 
 // ==================================
@@ -297,22 +407,34 @@ const novedadesHexagonal = [
 document.addEventListener("DOMContentLoaded", () => {
     console.log("ELZUCO_FC blog cargado correctamente 🚀");
 
+    // LigaPro
     const partidosJugados = partidosHexagonal
         .filter((p) => p.jugado)
         .sort((a, b) => new Date(b.fechaISO) - new Date(a.fechaISO));
 
-    const partidosProximos = partidosHexagonal
+    const partidosProximosLiga = partidosHexagonal
         .filter((p) => !p.jugado)
         .sort((a, b) => new Date(a.fechaISO) - new Date(b.fechaISO));
 
-    renderUltimoResultado(partidosJugados);
-    renderTablaResultados(partidosJugados);
-    renderProximasFechas(partidosProximos);
-    renderNovedades(novedadesHexagonal);
+    // Copa Ecuador
+    const partidosProximosCopa = partidosCopaEcuador
+        .filter((p) => !p.jugado)
+        .sort((a, b) => new Date(a.fechaISO) - new Date(b.fechaISO));
+
+    renderUltimoResultado(partidosJugados);          // destacado LigaPro
+    renderTablaResultados(partidosJugados);          // tabla LigaPro
+
+    // 📌 Próximas fechas: LIGAPRO + COPA ECUADOR solo en sidebar
+    renderProximasFechas(partidosProximosLiga, partidosProximosCopa);
+
+    renderNovedades(novedadesHexagonal);             // noticias
+
+    // 📌 Copa Ecuador: solo RESULTADOS RECIENTES en su sección
+    renderCopaResultados(partidosCopaEcuador);
 });
 
 // ===================
-// Último resultado
+// Último resultado (LigaPro)
 // ===================
 function renderUltimoResultado(partidosJugados) {
     if (!partidosJugados.length) return;
@@ -356,7 +478,7 @@ function renderUltimoResultado(partidosJugados) {
 }
 
 // ===================
-// Tabla de resultados (solo los últimos 8)
+// Tabla de resultados (LigaPro, sólo últimos 8)
 // ===================
 function renderTablaResultados(partidosJugados) {
     const tbody = document.getElementById("tbody-resultados");
@@ -364,7 +486,6 @@ function renderTablaResultados(partidosJugados) {
 
     tbody.innerHTML = "";
 
-    // 👉 Mostrar solo los 8 últimos partidos
     const ultimos8 = partidosJugados.slice(0, 8);
 
     ultimos8.forEach((partido) => {
@@ -390,28 +511,35 @@ function renderTablaResultados(partidosJugados) {
 }
 
 // ===================
-// Próximas fechas (sidebar)
+// Próximas fechas (sidebar, LigaPro + Copa Ecuador)
 // ===================
-function renderProximasFechas(partidosProximos) {
+function renderProximasFechas(partidosProximosLiga, partidosProximosCopa = []) {
     const lista = document.getElementById("lista-proximas-fechas");
     if (!lista) return;
 
     lista.innerHTML = "";
 
-    if (!partidosProximos.length) {
+    const todos = [...(partidosProximosLiga || []), ...(partidosProximosCopa || [])];
+
+    if (!todos.length) {
         lista.innerHTML = `<li class="small text-muted">No hay partidos programados.</li>`;
         return;
     }
 
-    partidosProximos.slice(0, 6).forEach((partido) => {
-        const li = document.createElement("li");
-        li.className = "mb-2";
-        li.innerHTML = `
-      <span class="fw-semibold">${partido.local} vs ${partido.visitante}</span><br />
-      <small>${partido.fechaTexto} · ${partido.hora} · ${partido.estadio}</small>
-    `;
-        lista.appendChild(li);
-    });
+    todos
+        .sort((a, b) => new Date(a.fechaISO) - new Date(b.fechaISO))
+        .slice(0, 6)
+        .forEach((partido) => {
+            const detalleTorneo = partido.torneo ? ` · ${partido.torneo}` : "";
+
+            const li = document.createElement("li");
+            li.className = "mb-2";
+            li.innerHTML = `
+        <span class="fw-semibold">${partido.local} vs ${partido.visitante}</span><br />
+        <small>${partido.fechaTexto} · ${partido.hora} · ${partido.estadio || ""}${detalleTorneo}</small>
+      `;
+            lista.appendChild(li);
+        });
 }
 
 // ===================
@@ -453,10 +581,9 @@ function renderNovedades(novedades) {
         contenedor.appendChild(col);
     });
 
-    // Eventos de "Leer más"
     const botones = contenedor.querySelectorAll(".btn-leer-mas");
     const modalEl = document.getElementById("modalNovedad");
-    if (!modalEl) return; // si no existe el modal en el HTML, se muestran solo las tarjetas
+    if (!modalEl) return;
 
     const modalTitulo = modalEl.querySelector("#modalNovedadTitulo");
     const modalFecha = modalEl.querySelector("#modalNovedadFecha");
@@ -479,5 +606,42 @@ function renderNovedades(novedades) {
 
             modal.show();
         });
+    });
+}
+
+// ===================
+// Sección Copa Ecuador
+// ===================
+
+// tabla resultados Copa Ecuador
+function renderCopaResultados(partidos) {
+    const tbody = document.getElementById("tbody-copa-resultados");
+    if (!tbody) return;
+
+    tbody.innerHTML = "";
+
+    const jugados = partidos
+        .filter((p) => p.jugado)
+        .sort((a, b) => new Date(b.fechaISO) - new Date(a.fechaISO))
+        .slice(0, 6);
+
+    jugados.forEach((p) => {
+        const claseEstado =
+            p.estadoTipo === "ganado"
+                ? "badge-ganado"
+                : p.estadoTipo === "empatado"
+                    ? "badge-empatado"
+                    : p.estadoTipo === "perdido"
+                        ? "badge-perdido"
+                        : "bg-secondary";
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+      <td>${p.fechaTexto}</td>
+      <td>${p.fase || ""}</td>
+      <td>${p.local} ${p.golesLocal} – ${p.golesVisitante} ${p.visitante}</td>
+      <td><span class="badge ${claseEstado}">${p.estadoTexto || ""}</span></td>
+    `;
+        tbody.appendChild(tr);
     });
 }
