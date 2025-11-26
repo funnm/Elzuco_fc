@@ -270,8 +270,6 @@ const partidosCopaEcuador = [
             "LDU Quito se llevó un valioso triunfo 1–2 del Capwell en la ida de semifinales de la Copa Ecuador."
     },
 
-    // 🔮 PRÓXIMOS PARTIDOS
-
     {
         fechaISO: "2025-11-25",
         fechaTexto: "2025-11-25",
@@ -281,8 +279,17 @@ const partidosCopaEcuador = [
         estadio: "Olímpico Atahualpa",
         local: "U. Católica",
         visitante: "Cuenca Juniors",
-        jugado: false
+        golesLocal: 4,
+        golesVisitante: 1,
+        estadoTipo: "ganado",
+        estadoTexto: "Ganó U. Católica",
+        jugado: true,
+        resumen:
+            "Universidad Católica goleó 4–1 a Cuenca Juniors en Quito, dominando ampliamente el compromiso de ida por las semifinales de la Copa Ecuador."
     },
+
+    // 🔮 PRÓXIMOS PARTIDOS
+
     {
         fechaISO: "2025-11-29",
         fechaTexto: "2025-11-29",
@@ -345,6 +352,18 @@ const partidosCopaEcuador = [
 // =========================================
 
 const novedadesHexagonal = [
+    {
+        titulo: "U. Católica arrasa 4–1 a Cuenca Juniors en semifinales",
+        fechaTexto: "2025-11-25 · ELZUCO_FC",
+        imagen: "https://studiofutbol.com.ec/wp-content/uploads/2025/11/20251125199924-fbl-copa-ecuador-catolica-vs-cuenca-jr-1068x751.jpg",
+        textoCorto: "Universidad Católica ganó 4–1 a Cuenca Juniors y toma gran ventaja en la semifinal de la Copa Ecuador.",
+        textoLargo:
+            "En el estadio Olímpico Atahualpa, Universidad Católica dominó de principio a fin y goleó 4–1 a Cuenca Juniors. " +
+            "El conjunto camaratta mostró solvencia ofensiva y un intenso ritmo de juego que desbordó a su rival. " +
+            "Con esta victoria, U. Católica llega con una amplia ventaja al duelo de vuelta y se perfila como candidata a la final.",
+        tags: ["#UCatólica", "#CopaEcuador"]
+    },
+
     {
         titulo: "Macará golea a Delfín y se hace fuerte en casa",
         fechaTexto: "2025-11-23 · ELZUCO_FC",
