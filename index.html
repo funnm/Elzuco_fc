@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elzuco_ing | Engineering Vault Pro</title>
+    <title>Elzuco_ing | Vault Pro</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
@@ -12,24 +12,25 @@
 
     <style>
         /* =======================================================
-           ELZUCO VAULT PRO - ESTILOS PREMIUM RESPONSIVOS
+           ESTILOS PREMIUM Y RESPONSIVOS (SaaS Dashboard)
            ======================================================= */
         :root {
             --bg-main: #f8fafc;
             --sidebar-bg: #0f172a;
             --accent: #0ea5e9;
+            --accent-hover: #0284c7;
             --text-dark: #1e293b;
-            --font-main: 'Inter', system-ui, sans-serif;
+            --border-light: #e2e8f0;
         }
 
         body {
-            font-family: var(--font-main);
+            font-family: 'Inter', sans-serif;
             background-color: var(--bg-main);
             color: var(--text-dark);
             overflow-x: hidden;
         }
 
-        /* --- Scrollbars Minimalistas --- */
+        /* Scrollbars Elegantes */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -57,16 +58,16 @@
             top: 0;
             left: 0;
             color: #fff;
-            z-index: 1040;
+            z-index: 1050;
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 4px 0 24px rgba(0, 0, 0, 0.05);
         }
 
         .sidebar-header {
-            padding: 30px 25px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 35px 25px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .nav-link {
@@ -82,10 +83,6 @@
             text-decoration: none;
         }
 
-        .nav-link i {
-            font-size: 1.1rem;
-        }
-
         .nav-link:hover,
         .nav-link.active {
             color: #fff;
@@ -93,22 +90,27 @@
             border-left-color: var(--accent);
         }
 
-        /* --- Overlay para Móviles --- */
-        #sidebarOverlay {
+        /* --- Header y Overlay Móvil --- */
+        #sidebar-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1030;
+            background: rgba(15, 23, 42, 0.6);
+            z-index: 1045;
             display: none;
+            backdrop-filter: blur(2px);
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s;
         }
 
-        /* --- Navbar Superior Solo Móvil --- */
-        .mobile-header {
+        #sidebar-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .mobile-nav {
             display: none;
             background: var(--sidebar-bg);
             color: white;
@@ -117,7 +119,7 @@
             justify-content: space-between;
             position: sticky;
             top: 0;
-            z-index: 1020;
+            z-index: 1040;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
@@ -126,7 +128,7 @@
             margin-left: 280px;
             width: calc(100% - 280px);
             min-height: 100vh;
-            transition: all 0.3s ease;
+            transition: margin 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .main-container {
@@ -140,11 +142,13 @@
 
         .search-box input {
             border-radius: 50px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--border-light);
             padding: 12px 20px 12px 45px;
             width: 100%;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
             font-size: 0.95rem;
+            background: #fff;
+            transition: 0.2s;
         }
 
         .search-box input:focus {
@@ -157,9 +161,11 @@
         .exercise-card-pro {
             border-radius: 16px;
             background: #fff;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--border-light);
             transition: all 0.3s ease;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
         }
 
         .exercise-card-pro:hover {
@@ -168,25 +174,26 @@
             border-color: #bae6fd;
         }
 
+        /* Limita el texto a 3 líneas exactas (Aspecto profesional) */
         .exercise-card-pro p.text-muted {
-            height: 4.5em;
-            /* Aproximadamente 3 líneas de texto */
-            line-height: 1.5em;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
             overflow: hidden;
+            line-height: 1.6;
         }
 
         .badge-archivo {
             font-weight: 500;
             padding: 8px 12px;
-            border-radius: 10px;
+            border-radius: 8px;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             background: #f1f5f9;
             color: var(--text-dark);
-            border: 1px solid #e2e8f0;
-            margin-bottom: 8px;
-            margin-right: 8px;
+            border: 1px solid var(--border-light);
+            margin: 0 6px 6px 0;
             font-size: 0.85rem;
             transition: 0.2s;
         }
@@ -199,7 +206,23 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
-        /* --- Drop Zone y Formularios --- */
+        /* --- Inputs, Formularios y Drop Zone --- */
+        .form-control,
+        .form-select {
+            border-radius: 10px;
+            border: 1px solid var(--border-light);
+            padding: 10px 15px;
+            background: #f8fafc;
+            font-size: 0.95rem;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            background: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
+        }
+
         .drop-zone {
             border: 2px dashed #cbd5e1;
             border-radius: 16px;
@@ -226,62 +249,28 @@
 
         .file-preview-item {
             background: #fff;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--border-light);
             border-radius: 8px;
-            padding: 8px 12px;
-            margin-top: 8px;
+            padding: 10px 15px;
+            margin-top: 10px;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
-        .form-control,
-        .form-select {
-            border-radius: 10px;
-            border: 1px solid #e2e8f0;
-            padding: 10px 15px;
-            background: #f8fafc;
-        }
-
-        .form-control:focus,
-        .form-select:focus {
-            background: #fff;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
-        }
-
-        .btn-accent {
-            background: var(--accent);
-            color: #fff;
-            font-weight: 600;
-            border-radius: 10px;
-            transition: 0.2s;
-        }
-
-        .btn-accent:hover {
-            background: #0284c7;
-            color: #fff;
-            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
-        }
-
         /* ==========================================
-           RESPONSIVE DESIGN (CELULARES Y TABLETS)
+           MODO CELULAR Y TABLET (RESPONSIVE)
            ========================================== */
         @media (max-width: 991.98px) {
             #sidebar {
                 transform: translateX(-100%);
             }
 
-            #sidebar.show {
+            #sidebar.active {
                 transform: translateX(0);
             }
 
-            #sidebarOverlay.show {
-                display: block;
-                opacity: 1;
-            }
-
-            .mobile-header {
+            .mobile-nav {
                 display: flex;
             }
 
@@ -291,28 +280,17 @@
             }
 
             .main-container {
-                padding: 20px 15px;
+                padding: 25px 20px;
             }
-
-            /* Menos padding en móviles */
 
             .page-header {
                 flex-direction: column;
                 align-items: flex-start !important;
-                gap: 15px;
-                margin-bottom: 30px !important;
+                gap: 20px;
             }
 
-            /* Buscador ancho completo */
             .search-box {
                 width: 100%;
-            }
-
-            .search-box-wrapper {
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
             }
 
             .admin-controls {
@@ -323,13 +301,8 @@
                 width: 100%;
             }
 
-            /* Ajustes del Panel en Móvil */
             .drop-zone {
                 padding: 30px 15px !important;
-            }
-
-            .drop-zone i {
-                font-size: 2.5rem !important;
             }
         }
     </style>
@@ -337,50 +310,55 @@
 
 <body>
 
-    <div class="mobile-header">
+    <div class="mobile-nav">
         <h5 class="fw-bold mb-0">ELZUCO<span style="color:var(--accent)">_ING</span></h5>
-        <button class="btn btn-outline-light border-0" id="btnToggleMenu"><i class="bi bi-list fs-2"></i></button>
+        <button class="btn btn-outline-light border-0 px-2 py-1" id="toggle-sidebar"><i
+                class="bi bi-list fs-2"></i></button>
     </div>
 
-    <div id="sidebarOverlay"></div>
+    <div id="sidebar-overlay"></div>
 
     <div class="d-flex">
         <nav id="sidebar">
             <div class="sidebar-header">
                 <h4 class="fw-bold mb-1">ELZUCO<span style="color:var(--accent)">_ING</span></h4>
-                <p class="text-muted small fw-bold mb-0">VAULT PRO</p>
+                <p class="text-muted small fw-bold mb-0" style="letter-spacing: 1px;">VAULT PRO</p>
             </div>
             <div class="mt-4 flex-grow-1 overflow-auto">
-                <a class="nav-link active" onclick="filtrar('Todas')"><i class="bi bi-grid-1x2 me-3"></i> Dashboard</a>
-                <p class="text-muted small fw-bold px-4 mt-4 mb-2" style="letter-spacing: 1px;">MATERIAS</p>
+                <a class="nav-link active" onclick="filtrar('Todas')"><i class="bi bi-grid-1x2 me-3"></i> Dashboard
+                    General</a>
+                <p class="text-muted small fw-bold px-4 mt-4 mb-2" style="letter-spacing: 1px;">CATEGORÍAS</p>
                 <div id="menu-materias">
                 </div>
             </div>
-            <div class="p-4 border-top border-secondary mt-auto">
-                <button class="btn btn-outline-light btn-sm w-100 mb-2" id="btnAdmin" data-bs-toggle="modal"
-                    data-bs-target="#loginModal"><i class="bi bi-shield-lock me-2"></i>Autor Login</button>
-                <button class="btn btn-danger btn-sm w-100 d-none" id="btnLogout" onclick="logout()"><i
-                        class="bi bi-power me-2"></i>Cerrar Sesión</button>
+            <div class="p-4 border-top border-secondary border-opacity-25 mt-auto">
+                <button class="btn btn-outline-light btn-sm w-100 mb-2 fw-semibold" id="btnAdmin" data-bs-toggle="modal"
+                    data-bs-target="#loginModal">
+                    <i class="bi bi-shield-lock me-2"></i>Ingreso Autor
+                </button>
+                <button class="btn btn-danger btn-sm w-100 d-none fw-semibold" id="btnLogout" onclick="logout()">
+                    <i class="bi bi-power me-2"></i>Cerrar Sesión
+                </button>
             </div>
         </nav>
 
-        <div id="content">
+        <main id="content">
             <div class="main-container">
                 <div class="page-header d-flex justify-content-between align-items-center mb-5">
-                    <div>
+                    <div class="w-100 w-lg-auto mb-3 mb-lg-0">
                         <h2 class="fw-bold text-dark mb-1" id="pageTitle">Dashboard General</h2>
                         <p class="text-muted mb-0">Repositorio Multi-Formato de Ingeniería.</p>
                     </div>
-                    <div class="search-box-wrapper d-flex align-items-center gap-3">
-                        <div class="search-box position-relative">
+                    <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-3 w-100 w-lg-auto">
+                        <div class="search-box position-relative w-100">
                             <i class="bi bi-search position-absolute top-50 translate-middle-y ms-3 text-muted"></i>
                             <input type="text" id="searchInput" class="form-control"
-                                placeholder="Buscar cálculo o script...">
+                                placeholder="Buscar título o detalle...">
                         </div>
-                        <div class="admin-controls d-none">
-                            <button class="btn btn-dark fw-bold px-4 py-2 rounded-pill shadow-sm"
+                        <div class="admin-controls d-none w-100 w-lg-auto">
+                            <button class="btn btn-dark fw-bold px-4 py-2 w-100 rounded-pill shadow-sm"
                                 data-bs-toggle="collapse" data-bs-target="#panelAdmin">
-                                <i class="bi bi-gear-fill me-2"></i>Panel Autor
+                                <i class="bi bi-gear-fill me-2"></i>Panel de Control
                             </button>
                         </div>
                     </div>
@@ -388,34 +366,35 @@
 
                 <div class="collapse" id="panelAdmin">
                     <div class="row g-4 mb-5">
-                        <div class="col-lg-8">
+                        <div class="col-12 col-xl-8">
                             <div class="card p-4 p-md-5 border-0 shadow-sm rounded-4 h-100">
-                                <h5 class="fw-bold mb-4 text-dark"><i
+                                <h5 class="fw-bold text-dark mb-4"><i
                                         class="bi bi-cloud-arrow-up text-accent me-2"></i>Nuevo Registro Técnico</h5>
                                 <form id="uploadForm">
                                     <div class="row g-4">
-                                        <div class="col-md-7">
+                                        <div class="col-12 col-md-7">
                                             <label class="form-label small fw-bold text-muted">Título del
-                                                Ejercicio</label>
+                                                Recurso</label>
                                             <input type="text" id="tit" class="form-control"
-                                                placeholder="Ej: Diseño de Vigas..." required>
+                                                placeholder="Ej: Diseño de Losa..." required>
                                         </div>
-                                        <div class="col-md-5">
-                                            <label class="form-label small fw-bold text-muted">Materia</label>
+                                        <div class="col-12 col-md-5">
+                                            <label class="form-label small fw-bold text-muted">Materia /
+                                                Categoría</label>
                                             <select id="selectMat" class="form-select" required></select>
                                         </div>
                                         <div class="col-12">
-                                            <label class="form-label small fw-bold text-muted">Descripción
-                                                Técnica</label>
+                                            <label class="form-label small fw-bold text-muted">Descripción y
+                                                Detalles</label>
                                             <textarea id="desc" class="form-control" rows="3"
-                                                placeholder="Detalla normativas, propósito del script..."
+                                                placeholder="Explica qué normativas usa o de qué trata..."
                                                 required></textarea>
                                         </div>
                                         <div class="col-12">
                                             <div id="drop-zone" class="drop-zone p-5 text-center">
                                                 <i class="bi bi-files display-4 text-muted mb-3 d-block"></i>
-                                                <h6 class="fw-bold text-dark">Suelta cualquier archivo aquí</h6>
-                                                <p class="text-muted small mb-0">PDF, Excel, Word, AutoCAD, ZIP,
+                                                <h6 class="fw-bold text-dark">Arrastra tus archivos aquí</h6>
+                                                <p class="text-muted small mb-0">PDF, Excel, Word, DWG, ZIP, Py,
                                                     Imágenes...</p>
                                                 <input type="file" id="archivosSubidos" class="file-input" multiple
                                                     required>
@@ -424,30 +403,30 @@
                                         </div>
                                         <div class="col-12 text-end mt-4">
                                             <button type="submit"
-                                                class="btn btn-accent px-5 py-2 w-100 d-md-inline-block w-md-auto">Publicar
-                                                Registro</button>
+                                                class="btn btn-dark w-100 w-md-auto px-5 py-2 fw-bold rounded-pill">Subir
+                                                a la Nube</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
 
-                        <div class="col-lg-4">
+                        <div class="col-12 col-xl-4">
                             <div class="card p-4 p-md-5 border-0 shadow-sm rounded-4 h-100">
-                                <h5 class="fw-bold mb-4 text-dark"><i class="bi bi-tags text-accent me-2"></i>Nueva
+                                <h5 class="fw-bold text-dark mb-4"><i class="bi bi-tags text-accent me-2"></i>Nueva
                                     Materia</h5>
                                 <form id="formMateria">
                                     <div class="mb-3">
-                                        <label class="form-label small fw-bold text-muted">Nombre de la
-                                            Categoría</label>
+                                        <label class="form-label small fw-bold text-muted">Nombre de la Materia</label>
                                         <input type="text" id="nombreMat" class="form-control"
-                                            placeholder="Ej: Puentes..." required>
+                                            placeholder="Ej: Vías y Transporte..." required>
                                     </div>
-                                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2 mb-4">Agregar al
+                                    <button type="submit"
+                                        class="btn btn-dark w-100 fw-bold py-2 mb-4 rounded-pill">Agregar al
                                         Menú</button>
                                 </form>
-                                <h6 class="fw-bold text-muted small mt-2 mb-3">MATERIAS EXISTENTES</h6>
-                                <div id="lista-materias-borrar" class="overflow-auto" style="max-height: 250px;">
+                                <h6 class="fw-bold text-muted small mt-2 mb-3">GESTIONAR MATERIAS</h6>
+                                <div id="lista-materias-borrar" class="overflow-auto pe-2" style="max-height: 250px;">
                                 </div>
                             </div>
                         </div>
@@ -456,7 +435,7 @@
 
                 <div class="row g-4" id="grid"></div>
             </div>
-        </div>
+        </main>
     </div>
 
     <div class="modal fade" id="loginModal" tabindex="-1">
@@ -465,11 +444,45 @@
                 <div class="bg-light rounded-circle d-inline-block p-3 mb-3 mx-auto" style="width: 70px;">
                     <i class="bi bi-fingerprint text-dark fs-1"></i>
                 </div>
-                <h5 class="fw-bold mb-1">Autor Login</h5>
-                <p class="text-muted small mb-4">Ingeniería Vault</p>
+                <h5 class="fw-bold mb-1">Autorización</h5>
+                <p class="text-muted small mb-4">Acceso exclusivo Elzuco_ing</p>
                 <input type="email" id="email" class="form-control mb-3 text-center" placeholder="Correo electrónico">
                 <input type="password" id="pass" class="form-control mb-4 text-center" placeholder="Contraseña">
-                <button class="btn btn-dark w-100 fw-bold py-2" id="btnIngresar" onclick="login()">Ingresar</button>
+                <button class="btn btn-dark w-100 fw-bold py-2 rounded-pill" id="btnIngresar"
+                    onclick="login()">Ingresar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4 p-2">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="fw-bold text-dark mb-0"><i class="bi bi-pencil-square text-accent me-2"></i>Editar
+                        Registro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm">
+                        <input type="hidden" id="editId">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-muted">Título</label>
+                            <input type="text" id="editTit" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-muted">Materia</label>
+                            <select id="editMat" class="form-select" required></select>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label small fw-bold text-muted">Descripción</label>
+                            <textarea id="editDesc" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-dark fw-bold px-4 rounded-pill">Guardar
+                                Cambios</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
