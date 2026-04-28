@@ -11,12 +11,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+        /* =======================================================
+           ELZUCO VAULT PRO - ESTILOS PREMIUM RESPONSIVOS
+           ======================================================= */
         :root {
             --bg-main: #f8fafc;
             --sidebar-bg: #0f172a;
             --accent: #0ea5e9;
             --text-dark: #1e293b;
-            --font-main: 'Inter', sans-serif;
+            --font-main: 'Inter', system-ui, sans-serif;
         }
 
         body {
@@ -26,66 +29,177 @@
             overflow-x: hidden;
         }
 
-        /* Sidebar */
+        /* --- Scrollbars Minimalistas --- */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* --- Sidebar --- */
         #sidebar {
             width: 280px;
             background: var(--sidebar-bg);
             min-height: 100vh;
             position: fixed;
+            top: 0;
+            left: 0;
             color: #fff;
-            z-index: 1000;
-            transition: all 0.3s;
+            z-index: 1040;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.05);
         }
 
         .sidebar-header {
-            padding: 35px 25px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 30px 25px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .nav-link {
             color: #94a3b8;
             padding: 12px 25px;
             font-weight: 500;
-            transition: 0.3s;
+            font-size: 0.95rem;
+            transition: 0.2s;
             border-left: 4px solid transparent;
             cursor: pointer;
+            display: flex;
+            align-items: center;
             text-decoration: none;
-            display: block;
+        }
+
+        .nav-link i {
+            font-size: 1.1rem;
         }
 
         .nav-link:hover,
         .nav-link.active {
             color: #fff;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.04);
             border-left-color: var(--accent);
         }
 
-        /* Content */
+        /* --- Overlay para Móviles --- */
+        #sidebarOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1030;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* --- Navbar Superior Solo Móvil --- */
+        .mobile-header {
+            display: none;
+            background: var(--sidebar-bg);
+            color: white;
+            padding: 15px 20px;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1020;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- Contenido Principal --- */
         #content {
-            padding-left: 280px;
-            width: 100%;
-            transition: all 0.3s;
+            margin-left: 280px;
+            width: calc(100% - 280px);
+            min-height: 100vh;
+            transition: all 0.3s ease;
         }
 
         .main-container {
             padding: 40px 50px;
         }
 
-        /* Modern Cards */
+        /* --- Buscador --- */
+        .search-box {
+            width: 350px;
+        }
+
+        .search-box input {
+            border-radius: 50px;
+            border: 1px solid #e2e8f0;
+            padding: 12px 20px 12px 45px;
+            width: 100%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+            font-size: 0.95rem;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
+            outline: none;
+        }
+
+        /* --- Tarjetas Profesionales --- */
         .exercise-card-pro {
             border-radius: 16px;
             background: #fff;
             border: 1px solid #e2e8f0;
-            transition: all 0.3s;
-            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
         .exercise-card-pro:hover {
             transform: translateY(-5px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border-color: #bae6fd;
         }
 
-        /* Drop Zone */
+        .exercise-card-pro p.text-muted {
+            height: 4.5em;
+            /* Aproximadamente 3 líneas de texto */
+            line-height: 1.5em;
+            overflow: hidden;
+        }
+
+        .badge-archivo {
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            background: #f1f5f9;
+            color: var(--text-dark);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 8px;
+            margin-right: 8px;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+
+        .badge-archivo:hover {
+            background: #fff;
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        /* --- Drop Zone y Formularios --- */
         .drop-zone {
             border: 2px dashed #cbd5e1;
             border-radius: 16px;
@@ -95,8 +209,7 @@
             position: relative;
         }
 
-        .drop-zone:hover,
-        .drop-zone.dragover {
+        .drop-zone:hover {
             border-color: var(--accent);
             background: #f0f9ff;
         }
@@ -111,7 +224,6 @@
             cursor: pointer;
         }
 
-        /* File List Preview */
         .file-preview-item {
             background: #fff;
             border: 1px solid #e2e8f0;
@@ -123,50 +235,101 @@
             justify-content: space-between;
         }
 
-        .badge-archivo {
-            font-weight: 500;
-            padding: 6px 12px;
-            border-radius: 8px;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            background: #f1f5f9;
-            color: #334155;
+        .form-control,
+        .form-select {
+            border-radius: 10px;
             border: 1px solid #e2e8f0;
-            margin-bottom: 5px;
-            margin-right: 5px;
-            font-size: 0.85rem;
+            padding: 10px 15px;
+            background: #f8fafc;
         }
 
-        .badge-archivo:hover {
+        .form-control:focus,
+        .form-select:focus {
             background: #fff;
             border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
         }
 
         .btn-accent {
             background: var(--accent);
             color: #fff;
-            border: none;
             font-weight: 600;
             border-radius: 10px;
+            transition: 0.2s;
         }
 
         .btn-accent:hover {
             background: #0284c7;
             color: #fff;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
         }
 
-        @media (max-width: 992px) {
+        /* ==========================================
+           RESPONSIVE DESIGN (CELULARES Y TABLETS)
+           ========================================== */
+        @media (max-width: 991.98px) {
             #sidebar {
-                margin-left: -280px;
+                transform: translateX(-100%);
+            }
+
+            #sidebar.show {
+                transform: translateX(0);
+            }
+
+            #sidebarOverlay.show {
+                display: block;
+                opacity: 1;
+            }
+
+            .mobile-header {
+                display: flex;
             }
 
             #content {
-                padding-left: 0;
+                margin-left: 0;
+                width: 100%;
             }
 
-            #sidebar.active {
-                margin-left: 0;
+            .main-container {
+                padding: 20px 15px;
+            }
+
+            /* Menos padding en móviles */
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start !important;
+                gap: 15px;
+                margin-bottom: 30px !important;
+            }
+
+            /* Buscador ancho completo */
+            .search-box {
+                width: 100%;
+            }
+
+            .search-box-wrapper {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .admin-controls {
+                width: 100%;
+            }
+
+            .admin-controls button {
+                width: 100%;
+            }
+
+            /* Ajustes del Panel en Móvil */
+            .drop-zone {
+                padding: 30px 15px !important;
+            }
+
+            .drop-zone i {
+                font-size: 2.5rem !important;
             }
         }
     </style>
@@ -174,23 +337,30 @@
 
 <body>
 
+    <div class="mobile-header">
+        <h5 class="fw-bold mb-0">ELZUCO<span style="color:var(--accent)">_ING</span></h5>
+        <button class="btn btn-outline-light border-0" id="btnToggleMenu"><i class="bi bi-list fs-2"></i></button>
+    </div>
+
+    <div id="sidebarOverlay"></div>
+
     <div class="d-flex">
         <nav id="sidebar">
             <div class="sidebar-header">
                 <h4 class="fw-bold mb-1">ELZUCO<span style="color:var(--accent)">_ING</span></h4>
                 <p class="text-muted small fw-bold mb-0">VAULT PRO</p>
             </div>
-            <div class="mt-4">
-                <a class="nav-link active" onclick="filtrar('Todas')"><i class="bi bi-grid-1x2 me-2"></i> Dashboard</a>
-                <p class="text-muted small fw-bold px-4 mt-4 mb-2 tracking-wider">MATERIAS</p>
+            <div class="mt-4 flex-grow-1 overflow-auto">
+                <a class="nav-link active" onclick="filtrar('Todas')"><i class="bi bi-grid-1x2 me-3"></i> Dashboard</a>
+                <p class="text-muted small fw-bold px-4 mt-4 mb-2" style="letter-spacing: 1px;">MATERIAS</p>
                 <div id="menu-materias">
                 </div>
             </div>
-            <div class="mt-auto p-4 border-top border-secondary">
+            <div class="p-4 border-top border-secondary mt-auto">
                 <button class="btn btn-outline-light btn-sm w-100 mb-2" id="btnAdmin" data-bs-toggle="modal"
-                    data-bs-target="#loginModal">Autor Login</button>
-                <button class="btn btn-danger btn-sm w-100 d-none" id="btnLogout" onclick="logout()">Cerrar
-                    Sesión</button>
+                    data-bs-target="#loginModal"><i class="bi bi-shield-lock me-2"></i>Autor Login</button>
+                <button class="btn btn-danger btn-sm w-100 d-none" id="btnLogout" onclick="logout()"><i
+                        class="bi bi-power me-2"></i>Cerrar Sesión</button>
             </div>
         </nav>
 
@@ -198,15 +368,18 @@
             <div class="main-container">
                 <div class="page-header d-flex justify-content-between align-items-center mb-5">
                     <div>
-                        <h2 class="fw-bold" id="pageTitle">Dashboard General</h2>
+                        <h2 class="fw-bold text-dark mb-1" id="pageTitle">Dashboard General</h2>
                         <p class="text-muted mb-0">Repositorio Multi-Formato de Ingeniería.</p>
                     </div>
-                    <div class="d-flex gap-2">
-                        <input type="text" id="searchInput" class="form-control rounded-pill px-4"
-                            placeholder="Buscar cálculo...">
+                    <div class="search-box-wrapper d-flex align-items-center gap-3">
+                        <div class="search-box position-relative">
+                            <i class="bi bi-search position-absolute top-50 translate-middle-y ms-3 text-muted"></i>
+                            <input type="text" id="searchInput" class="form-control"
+                                placeholder="Buscar cálculo o script...">
+                        </div>
                         <div class="admin-controls d-none">
-                            <button class="btn btn-dark fw-bold px-4 rounded-pill" data-bs-toggle="collapse"
-                                data-bs-target="#panelAdmin">
+                            <button class="btn btn-dark fw-bold px-4 py-2 rounded-pill shadow-sm"
+                                data-bs-toggle="collapse" data-bs-target="#panelAdmin">
                                 <i class="bi bi-gear-fill me-2"></i>Panel Autor
                             </button>
                         </div>
@@ -216,55 +389,65 @@
                 <div class="collapse" id="panelAdmin">
                     <div class="row g-4 mb-5">
                         <div class="col-lg-8">
-                            <div class="card p-4 border-0 shadow-sm rounded-4">
-                                <h5 class="fw-bold mb-4"><i class="bi bi-cloud-arrow-up text-accent me-2"></i>Nuevo
-                                    Registro Técnico</h5>
+                            <div class="card p-4 p-md-5 border-0 shadow-sm rounded-4 h-100">
+                                <h5 class="fw-bold mb-4 text-dark"><i
+                                        class="bi bi-cloud-arrow-up text-accent me-2"></i>Nuevo Registro Técnico</h5>
                                 <form id="uploadForm">
-                                    <div class="row g-3">
+                                    <div class="row g-4">
                                         <div class="col-md-7">
-                                            <label class="form-label small fw-bold">Título del Ejercicio</label>
-                                            <input type="text" id="tit" class="form-control" placeholder="..." required>
+                                            <label class="form-label small fw-bold text-muted">Título del
+                                                Ejercicio</label>
+                                            <input type="text" id="tit" class="form-control"
+                                                placeholder="Ej: Diseño de Vigas..." required>
                                         </div>
                                         <div class="col-md-5">
-                                            <label class="form-label small fw-bold">Materia</label>
+                                            <label class="form-label small fw-bold text-muted">Materia</label>
                                             <select id="selectMat" class="form-select" required></select>
                                         </div>
                                         <div class="col-12">
-                                            <label class="form-label small fw-bold">Descripción / Detalles</label>
-                                            <textarea id="desc" class="form-control" rows="2" required></textarea>
+                                            <label class="form-label small fw-bold text-muted">Descripción
+                                                Técnica</label>
+                                            <textarea id="desc" class="form-control" rows="3"
+                                                placeholder="Detalla normativas, propósito del script..."
+                                                required></textarea>
                                         </div>
                                         <div class="col-12">
                                             <div id="drop-zone" class="drop-zone p-5 text-center">
-                                                <i class="bi bi-files display-4 text-muted mb-2"></i>
-                                                <h6 class="fw-bold">Suelta cualquier archivo aquí</h6>
-                                                <p class="text-muted small">PDF, Excel, Word, AutoCAD, ZIP, Imágenes...
-                                                </p>
+                                                <i class="bi bi-files display-4 text-muted mb-3 d-block"></i>
+                                                <h6 class="fw-bold text-dark">Suelta cualquier archivo aquí</h6>
+                                                <p class="text-muted small mb-0">PDF, Excel, Word, AutoCAD, ZIP,
+                                                    Imágenes...</p>
                                                 <input type="file" id="archivosSubidos" class="file-input" multiple
                                                     required>
                                             </div>
                                             <div id="file-preview-container" class="mt-3"></div>
                                         </div>
-                                        <div class="col-12 text-end">
-                                            <button type="submit" class="btn btn-accent px-5 py-2">Publicar
+                                        <div class="col-12 text-end mt-4">
+                                            <button type="submit"
+                                                class="btn btn-accent px-5 py-2 w-100 d-md-inline-block w-md-auto">Publicar
                                                 Registro</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
+
                         <div class="col-lg-4">
-                            <div class="card p-4 border-0 shadow-sm rounded-4 h-100">
-                                <h5 class="fw-bold mb-4"><i class="bi bi-tags text-accent me-2"></i>Nueva Materia</h5>
+                            <div class="card p-4 p-md-5 border-0 shadow-sm rounded-4 h-100">
+                                <h5 class="fw-bold mb-4 text-dark"><i class="bi bi-tags text-accent me-2"></i>Nueva
+                                    Materia</h5>
                                 <form id="formMateria">
                                     <div class="mb-3">
-                                        <label class="form-label small fw-bold">Nombre de la Materia</label>
+                                        <label class="form-label small fw-bold text-muted">Nombre de la
+                                            Categoría</label>
                                         <input type="text" id="nombreMat" class="form-control"
                                             placeholder="Ej: Puentes..." required>
                                     </div>
-                                    <button type="submit" class="btn btn-dark w-100 fw-bold">Agregar al Menú</button>
+                                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2 mb-4">Agregar al
+                                        Menú</button>
                                 </form>
-                                <hr>
-                                <div id="lista-materias-borrar" class="mt-3">
+                                <h6 class="fw-bold text-muted small mt-2 mb-3">MATERIAS EXISTENTES</h6>
+                                <div id="lista-materias-borrar" class="overflow-auto" style="max-height: 250px;">
                                 </div>
                             </div>
                         </div>
@@ -279,20 +462,24 @@
     <div class="modal fade" id="loginModal" tabindex="-1">
         <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content p-4 text-center border-0 shadow-lg rounded-4">
-                <h5 class="fw-bold mb-4">Autor Login</h5><input type="email" id="email" class="form-control mb-3"
-                    placeholder="Correo"><input type="password" id="pass" class="form-control mb-4"
-                    placeholder="Clave"><button class="btn btn-dark w-100 fw-bold" id="btnIngresar"
-                    onclick="login()">Ingresar</button>
+                <div class="bg-light rounded-circle d-inline-block p-3 mb-3 mx-auto" style="width: 70px;">
+                    <i class="bi bi-fingerprint text-dark fs-1"></i>
+                </div>
+                <h5 class="fw-bold mb-1">Autor Login</h5>
+                <p class="text-muted small mb-4">Ingeniería Vault</p>
+                <input type="email" id="email" class="form-control mb-3 text-center" placeholder="Correo electrónico">
+                <input type="password" id="pass" class="form-control mb-4 text-center" placeholder="Contraseña">
+                <button class="btn btn-dark w-100 fw-bold py-2" id="btnIngresar" onclick="login()">Ingresar</button>
             </div>
         </div>
     </div>
 
-    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
-        <div id="liveToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive"
-            aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body fw-medium" id="toastMsg"></div><button type="button"
-                    class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1200;">
+        <div id="liveToast" class="toast align-items-center text-white border-0 shadow-lg" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="d-flex p-1">
+                <div class="toast-body fw-medium" id="toastMsg"></div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
             </div>
         </div>
     </div>
