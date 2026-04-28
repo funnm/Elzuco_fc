@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elzuco_ing | Vault Pro</title>
+    <title>Elzuco_ing | Engineering Vault Pro</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
@@ -18,8 +18,8 @@
             --bg-main: #f8fafc;
             --sidebar-bg: #0f172a;
             --accent: #0ea5e9;
-            --accent-hover: #0284c7;
             --text-dark: #1e293b;
+            --text-muted: #64748b;
             --border-light: #e2e8f0;
         }
 
@@ -28,9 +28,12 @@
             background-color: var(--bg-main);
             color: var(--text-dark);
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        /* Scrollbars Elegantes */
+        /* --- Scrollbars Minimalistas --- */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -49,7 +52,7 @@
             background: #94a3b8;
         }
 
-        /* --- Sidebar --- */
+        /* --- Sidebar & Layout --- */
         #sidebar {
             width: 280px;
             background: var(--sidebar-bg);
@@ -59,87 +62,43 @@
             left: 0;
             color: #fff;
             z-index: 1050;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.05);
         }
 
-        .sidebar-header {
-            padding: 35px 25px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .nav-link {
-            color: #94a3b8;
-            padding: 12px 25px;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: 0.2s;
-            border-left: 4px solid transparent;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
-
-        .nav-link:hover,
-        .nav-link.active {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.04);
-            border-left-color: var(--accent);
-        }
-
-        /* --- Header y Overlay Móvil --- */
-        #sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(15, 23, 42, 0.6);
-            z-index: 1045;
-            display: none;
-            backdrop-filter: blur(2px);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        #sidebar-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        .mobile-nav {
-            display: none;
-            background: var(--sidebar-bg);
-            color: white;
-            padding: 15px 20px;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 1040;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        /* --- Contenido Principal --- */
         #content {
             margin-left: 280px;
             width: calc(100% - 280px);
-            min-height: 100vh;
+            flex: 1;
             transition: margin 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .main-container {
             padding: 40px 50px;
+            min-height: calc(100vh - 200px);
+        }
+
+        /* --- Navegación --- */
+        .nav-link {
+            color: #94a3b8;
+            padding: 12px 25px;
+            font-weight: 500;
+            border-left: 4px solid transparent;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            transition: 0.2s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: var(--accent);
         }
 
         /* --- Buscador --- */
-        .search-box {
-            width: 350px;
-        }
-
         .search-box input {
             border-radius: 50px;
             border: 1px solid var(--border-light);
@@ -159,7 +118,7 @@
 
         /* --- Tarjetas Profesionales --- */
         .exercise-card-pro {
-            border-radius: 16px;
+            border-radius: 20px;
             background: #fff;
             border: 1px solid var(--border-light);
             transition: all 0.3s ease;
@@ -170,11 +129,10 @@
 
         .exercise-card-pro:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08);
             border-color: #bae6fd;
         }
 
-        /* Limita el texto a 3 líneas exactas (Aspecto profesional) */
         .exercise-card-pro p.text-muted {
             display: -webkit-box;
             -webkit-line-clamp: 3;
@@ -185,17 +143,17 @@
 
         .badge-archivo {
             font-weight: 500;
-            padding: 8px 12px;
-            border-radius: 8px;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
+            padding: 8px 14px;
+            border-radius: 10px;
             background: #f1f5f9;
             color: var(--text-dark);
             border: 1px solid var(--border-light);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: 0.2s;
             margin: 0 6px 6px 0;
             font-size: 0.85rem;
-            transition: 0.2s;
         }
 
         .badge-archivo:hover {
@@ -206,7 +164,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
-        /* --- Inputs, Formularios y Drop Zone --- */
+        /* --- Formularios y Drop Zone --- */
         .form-control,
         .form-select {
             border-radius: 10px;
@@ -247,20 +205,107 @@
             cursor: pointer;
         }
 
-        .file-preview-item {
-            background: #fff;
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
-            padding: 10px 15px;
-            margin-top: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        /* --- Footer Premium --- */
+        footer {
+            background: white;
+            border-top: 1px solid var(--border-light);
+            padding: 60px 0 30px;
+            margin-top: auto;
         }
 
-        /* ==========================================
-           MODO CELULAR Y TABLET (RESPONSIVE)
-           ========================================== */
+        .footer-title {
+            color: var(--text-dark);
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .footer-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: 0.2s;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .footer-link:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: #f1f5f9;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dark);
+            margin-right: 10px;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .social-btn:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .btn-donate {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fde68a;
+            font-weight: 600;
+            padding: 12px 20px;
+            border-radius: 12px;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn-donate:hover {
+            background: #fde68a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.2);
+        }
+
+        /* --- Mobile / Responsivo --- */
+        .mobile-header {
+            display: none;
+            background: var(--sidebar-bg);
+            color: white;
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1040;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.6);
+            z-index: 1045;
+            display: none;
+            backdrop-filter: blur(2px);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        #sidebar-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
         @media (max-width: 991.98px) {
             #sidebar {
                 transform: translateX(-100%);
@@ -270,7 +315,7 @@
                 transform: translateX(0);
             }
 
-            .mobile-nav {
+            .mobile-header {
                 display: flex;
             }
 
@@ -280,29 +325,11 @@
             }
 
             .main-container {
-                padding: 25px 20px;
-            }
-
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start !important;
-                gap: 20px;
+                padding: 30px 20px;
             }
 
             .search-box {
-                width: 100%;
-            }
-
-            .admin-controls {
-                width: 100%;
-            }
-
-            .admin-controls button {
-                width: 100%;
-            }
-
-            .drop-zone {
-                padding: 30px 15px !important;
+                width: 100% !important;
             }
         }
     </style>
@@ -310,7 +337,7 @@
 
 <body>
 
-    <div class="mobile-nav">
+    <div class="mobile-header">
         <h5 class="fw-bold mb-0">ELZUCO<span style="color:var(--accent)">_ING</span></h5>
         <button class="btn btn-outline-light border-0 px-2 py-1" id="toggle-sidebar"><i
                 class="bi bi-list fs-2"></i></button>
@@ -318,9 +345,9 @@
 
     <div id="sidebar-overlay"></div>
 
-    <div class="d-flex">
+    <div class="d-flex flex-grow-1">
         <nav id="sidebar">
-            <div class="sidebar-header">
+            <div class="sidebar-header text-center">
                 <h4 class="fw-bold mb-1">ELZUCO<span style="color:var(--accent)">_ING</span></h4>
                 <p class="text-muted small fw-bold mb-0" style="letter-spacing: 1px;">VAULT PRO</p>
             </div>
@@ -334,7 +361,7 @@
             <div class="p-4 border-top border-secondary border-opacity-25 mt-auto">
                 <button class="btn btn-outline-light btn-sm w-100 mb-2 fw-semibold" id="btnAdmin" data-bs-toggle="modal"
                     data-bs-target="#loginModal">
-                    <i class="bi bi-shield-lock me-2"></i>Ingreso Autor
+                    <i class="bi bi-shield-lock me-2"></i>Acceso Autor
                 </button>
                 <button class="btn btn-danger btn-sm w-100 d-none fw-semibold" id="btnLogout" onclick="logout()">
                     <i class="bi bi-power me-2"></i>Cerrar Sesión
@@ -344,21 +371,21 @@
 
         <main id="content">
             <div class="main-container">
-                <div class="page-header d-flex justify-content-between align-items-center mb-5">
+                <div class="page-header d-flex justify-content-between align-items-center mb-5 flex-wrap gap-3">
                     <div class="w-100 w-lg-auto mb-3 mb-lg-0">
                         <h2 class="fw-bold text-dark mb-1" id="pageTitle">Dashboard General</h2>
-                        <p class="text-muted mb-0">Repositorio Multi-Formato de Ingeniería.</p>
+                        <p class="text-muted mb-0">Repositorio Multi-Formato de Ingeniería Civil.</p>
                     </div>
                     <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-3 w-100 w-lg-auto">
                         <div class="search-box position-relative w-100">
                             <i class="bi bi-search position-absolute top-50 translate-middle-y ms-3 text-muted"></i>
-                            <input type="text" id="searchInput" class="form-control"
-                                placeholder="Buscar título o detalle...">
+                            <input type="text" id="searchInput" class="form-control" style="width: 320px;"
+                                placeholder="Buscar cálculo o tema...">
                         </div>
                         <div class="admin-controls d-none w-100 w-lg-auto">
                             <button class="btn btn-dark fw-bold px-4 py-2 w-100 rounded-pill shadow-sm"
                                 data-bs-toggle="collapse" data-bs-target="#panelAdmin">
-                                <i class="bi bi-gear-fill me-2"></i>Panel de Control
+                                <i class="bi bi-gear-fill me-2"></i>Panel Autor
                             </button>
                         </div>
                     </div>
@@ -375,8 +402,7 @@
                                         <div class="col-12 col-md-7">
                                             <label class="form-label small fw-bold text-muted">Título del
                                                 Recurso</label>
-                                            <input type="text" id="tit" class="form-control"
-                                                placeholder="Ej: Diseño de Losa..." required>
+                                            <input type="text" id="tit" class="form-control" required>
                                         </div>
                                         <div class="col-12 col-md-5">
                                             <label class="form-label small fw-bold text-muted">Materia /
@@ -386,9 +412,7 @@
                                         <div class="col-12">
                                             <label class="form-label small fw-bold text-muted">Descripción y
                                                 Detalles</label>
-                                            <textarea id="desc" class="form-control" rows="3"
-                                                placeholder="Explica qué normativas usa o de qué trata..."
-                                                required></textarea>
+                                            <textarea id="desc" class="form-control" rows="3" required></textarea>
                                         </div>
                                         <div class="col-12">
                                             <div id="drop-zone" class="drop-zone p-5 text-center">
@@ -418,8 +442,7 @@
                                 <form id="formMateria">
                                     <div class="mb-3">
                                         <label class="form-label small fw-bold text-muted">Nombre de la Materia</label>
-                                        <input type="text" id="nombreMat" class="form-control"
-                                            placeholder="Ej: Vías y Transporte..." required>
+                                        <input type="text" id="nombreMat" class="form-control" required>
                                     </div>
                                     <button type="submit"
                                         class="btn btn-dark w-100 fw-bold py-2 mb-4 rounded-pill">Agregar al
@@ -435,6 +458,48 @@
 
                 <div class="row g-4" id="grid"></div>
             </div>
+
+            <footer>
+                <div class="container-fluid px-4 px-md-5">
+                    <div class="row g-5">
+                        <div class="col-12 col-lg-4">
+                            <h5 class="footer-title">ELZUCO<span style="color:var(--accent)">_ING</span></h5>
+                            <p class="text-muted small mb-4">Repositorio educativo enfocado en la digitalización de
+                                memorias de cálculo, scripts de automatización y recursos técnicos para estudiantes y
+                                profesionales de ingeniería civil.</p>
+                            <div class="d-flex">
+                                <a href="https://wa.me/593XXXXXXXXX" target="_blank" class="social-btn"
+                                    title="WhatsApp Contacto"><i class="bi bi-whatsapp"></i></a>
+                                <a href="#" class="social-btn" title="YouTube"><i class="bi bi-youtube"></i></a>
+                                <a href="#" class="social-btn" title="Instagram"><i class="bi bi-instagram"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-lg-2">
+                            <h6 class="footer-title">Ayuda y Legal</h6>
+                            <a href="mailto:elzucoing2002@gmail.com?subject=Soporte%20Vault%20Pro"
+                                class="footer-link">Soporte Técnico</a>
+                            <a href="#" class="footer-link">Contacto Autor</a>
+                            <a class="footer-link" data-bs-toggle="modal" data-bs-target="#privacidadModal">Política de
+                                Privacidad</a>
+                        </div>
+
+                        <div class="col-12 col-lg-3">
+                            <h6 class="footer-title">Apoya el Proyecto</h6>
+                            <p class="text-muted small mb-4">Si este contenido te ha servido, considera realizar una
+                                donación para mantener el servidor y seguir subiendo recursos.</p>
+                            <a href="#" class="btn-donate w-100 justify-content-center">
+                                <i class="bi bi-cup-hot-fill me-2"></i> Apoya al proyecto
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 pt-4 border-top text-center">
+                        <p class="text-muted small mb-0">© 2026 ELZUCO_ING. Desarrollado en Cuenca, Ecuador. Todos los
+                            derechos reservados.</p>
+                    </div>
+                </div>
+            </footer>
         </main>
     </div>
 
@@ -475,13 +540,48 @@
                         </div>
                         <div class="mb-4">
                             <label class="form-label small fw-bold text-muted">Descripción</label>
-                            <textarea id="editDesc" class="form-control" rows="3" required></textarea>
+                            <textarea id="editDesc" class="form-control" rows="4" required></textarea>
                         </div>
                         <div class="text-end">
                             <button type="submit" class="btn btn-dark fw-bold px-4 rounded-pill">Guardar
                                 Cambios</button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="privacidadModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4 p-2">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="fw-bold text-dark mb-0"><i class="bi bi-shield-check text-accent me-2"></i>Políticas de
+                        Privacidad</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-muted small" style="line-height: 1.6;">
+                    <h6 class="fw-bold text-dark mt-2">1. Información General</h6>
+                    <p>Bienvenido al repositorio técnico de Elzuco_ing. Nos tomamos muy en serio la privacidad de
+                        quienes consultan nuestra plataforma. Esta política describe cómo manejamos la información
+                        cuando visitas nuestro sitio.</p>
+
+                    <h6 class="fw-bold text-dark mt-4">2. Uso de Analíticas</h6>
+                    <p>Nuestra bóveda digital utiliza sistemas de análisis para evaluar el tráfico del sitio web y
+                        mejorar la experiencia de usuario. No recopilamos nombres, correos electrónicos ni datos
+                        personales a menos que los proporciones voluntariamente contactando a soporte.</p>
+
+                    <h6 class="fw-bold text-dark mt-4">3. Descarga de Archivos y Responsabilidad</h6>
+                    <p>Los archivos alojados (PDF, Excel, Python, etc.) son estrictamente material educativo y técnico.
+                        Elzuco_ing no se responsabiliza por el mal uso de los cálculos en proyectos reales sin la
+                        revisión de un ingeniero calculista o profesional certificado. Todos los recursos se descargan y
+                        utilizan bajo la responsabilidad exclusiva del usuario.</p>
+
+                    <p class="mt-4 fst-italic">Última actualización: Abril de 2026</p>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-dark rounded-pill px-4"
+                        data-bs-dismiss="modal">Entendido</button>
                 </div>
             </div>
         </div>
