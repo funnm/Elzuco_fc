@@ -8,11 +8,168 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --bg-main: #f8fafc;
+            --sidebar-bg: #0f172a;
+            --accent: #0ea5e9;
+            --text-dark: #1e293b;
+            --font-main: 'Inter', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Sidebar */
+        #sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            min-height: 100vh;
+            position: fixed;
+            color: #fff;
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        .sidebar-header {
+            padding: 35px 25px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-link {
+            color: #94a3b8;
+            padding: 12px 25px;
+            font-weight: 500;
+            transition: 0.3s;
+            border-left: 4px solid transparent;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: var(--accent);
+        }
+
+        /* Content */
+        #content {
+            padding-left: 280px;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .main-container {
+            padding: 40px 50px;
+        }
+
+        /* Modern Cards */
+        .exercise-card-pro {
+            border-radius: 16px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .exercise-card-pro:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Drop Zone */
+        .drop-zone {
+            border: 2px dashed #cbd5e1;
+            border-radius: 16px;
+            background: #f8fafc;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .drop-zone:hover,
+        .drop-zone.dragover {
+            border-color: var(--accent);
+            background: #f0f9ff;
+        }
+
+        .file-input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* File List Preview */
+        .file-preview-item {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .badge-archivo {
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            background: #f1f5f9;
+            color: #334155;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 5px;
+            margin-right: 5px;
+            font-size: 0.85rem;
+        }
+
+        .badge-archivo:hover {
+            background: #fff;
+            border-color: var(--accent);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            font-weight: 600;
+            border-radius: 10px;
+        }
+
+        .btn-accent:hover {
+            background: #0284c7;
+            color: #fff;
+        }
+
+        @media (max-width: 992px) {
+            #sidebar {
+                margin-left: -280px;
+            }
+
+            #content {
+                padding-left: 0;
+            }
+
+            #sidebar.active {
+                margin-left: 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -20,148 +177,122 @@
     <div class="d-flex">
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h4 class="fw-bold text-white mb-1">ELZUCO<span class="text-accent">_ING</span></h4>
-                <span class="text-muted small fw-bold tracking-wider">ENGINEERING VAULT</span>
+                <h4 class="fw-bold mb-1">ELZUCO<span style="color:var(--accent)">_ING</span></h4>
+                <p class="text-muted small fw-bold mb-0">VAULT PRO</p>
             </div>
-            <ul class="nav flex-column mt-4" id="menu">
-                <a class="nav-link active" href="#" onclick="filtrar('Todas')"><i class="bi bi-grid-1x2"></i> Dashboard
-                    General</a>
-                <p class="text-muted small fw-bold px-4 mt-3 mb-2 tracking-wider">MATERIAS</p>
-                <a class="nav-link" href="#" onclick="filtrar('Análisis Estructural')"><i class="bi bi-building"></i>
-                    Análisis Estructural</a>
-                <a class="nav-link" href="#" onclick="filtrar('Resistencia de Materiales II')"><i
-                        class="bi bi-layers-half"></i> Resistencia II</a>
-                <a class="nav-link" href="#" onclick="filtrar('Mecánica de Fluidos')"><i class="bi bi-water"></i> Meca.
-                    Fluidos</a>
-                <a class="nav-link" href="#" onclick="filtrar('Mecánica de Suelos')"><i class="bi bi-geo-alt"></i>
-                    Suelos</a>
-            </ul>
-            <div class="mt-auto p-4 border-top border-secondary opacity-75">
-                <button class="btn btn-outline-accent btn-sm w-100 mb-2 fw-semibold" id="btnAdmin"
-                    data-bs-toggle="modal" data-bs-target="#loginModal">
-                    <i class="bi bi-shield-lock me-2"></i>Acceso Autor
-                </button>
-                <button class="btn btn-danger btn-sm w-100 d-none mb-2 fw-semibold" id="btnLogout" onclick="logout()">
-                    <i class="bi bi-power me-2"></i>Cerrar Sesión
-                </button>
+            <div class="mt-4">
+                <a class="nav-link active" onclick="filtrar('Todas')"><i class="bi bi-grid-1x2 me-2"></i> Dashboard</a>
+                <p class="text-muted small fw-bold px-4 mt-4 mb-2 tracking-wider">MATERIAS</p>
+                <div id="menu-materias">
+                </div>
+            </div>
+            <div class="mt-auto p-4 border-top border-secondary">
+                <button class="btn btn-outline-light btn-sm w-100 mb-2" id="btnAdmin" data-bs-toggle="modal"
+                    data-bs-target="#loginModal">Autor Login</button>
+                <button class="btn btn-danger btn-sm w-100 d-none" id="btnLogout" onclick="logout()">Cerrar
+                    Sesión</button>
             </div>
         </nav>
 
         <div id="content">
             <div class="main-container">
-                <div class="page-header d-flex justify-content-between align-items-end flex-wrap gap-3">
+                <div class="page-header d-flex justify-content-between align-items-center mb-5">
                     <div>
-                        <h2 class="fw-bold text-dark mb-1" id="pageTitle">Dashboard General</h2>
-                        <p class="text-muted mb-0">Gestión y documentación técnica de ingeniería civil.</p>
+                        <h2 class="fw-bold" id="pageTitle">Dashboard General</h2>
+                        <p class="text-muted mb-0">Repositorio Multi-Formato de Ingeniería.</p>
                     </div>
-                    <div class="d-flex gap-3 align-items-center">
-                        <div class="search-box position-relative">
-                            <i class="bi bi-search position-absolute top-50 translate-middle-y ms-3 text-muted"></i>
-                            <input type="text" id="searchInput" class="form-control ps-5"
-                                placeholder="Buscar cálculo o script...">
-                        </div>
+                    <div class="d-flex gap-2">
+                        <input type="text" id="searchInput" class="form-control rounded-pill px-4"
+                            placeholder="Buscar cálculo...">
                         <div class="admin-controls d-none">
-                            <button class="btn btn-dark fw-semibold px-4 shadow-sm" data-bs-toggle="collapse"
-                                data-bs-target="#collapseCarga">
-                                <i class="bi bi-cloud-arrow-up me-2"></i>Subir Archivo
+                            <button class="btn btn-dark fw-bold px-4 rounded-pill" data-bs-toggle="collapse"
+                                data-bs-target="#panelAdmin">
+                                <i class="bi bi-gear-fill me-2"></i>Panel Autor
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <div class="collapse" id="collapseCarga">
-                    <div class="panel-carga shadow-sm">
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <h5 class="fw-bold text-dark mb-0"><i class="bi bi-folder-plus text-accent me-2"></i>Nuevo
-                                Registro Técnico</h5>
-                            <button type="button" class="btn-close" data-bs-toggle="collapse"
-                                data-bs-target="#collapseCarga"></button>
-                        </div>
-                        <form id="uploadForm">
-                            <div class="row g-4">
-                                <div class="col-md-6">
-                                    <label class="form-label small fw-bold text-muted">Título del Recurso</label>
-                                    <input type="text" id="tit" class="form-control"
-                                        placeholder="Ej: Matriz de Rigidez..." required>
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="form-label small fw-bold text-muted">Materia</label>
-                                    <select id="mat" class="form-select">
-                                        <option>Análisis Estructural</option>
-                                        <option>Resistencia de Materiales II</option>
-                                        <option>Mecánica de Fluidos</option>
-                                        <option>Mecánica de Suelos</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="form-label small fw-bold text-muted">Nivel</label>
-                                    <select id="dif" class="form-select">
-                                        <option value="basico">Básico</option>
-                                        <option value="intermedio">Intermedio</option>
-                                        <option value="avanzado">Avanzado</option>
-                                    </select>
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label small fw-bold text-muted">Descripción Técnica</label>
-                                    <textarea id="desc" class="form-control" rows="2"
-                                        placeholder="Detalla el contenido, normativas usadas o propósito del script..."
-                                        required></textarea>
-                                </div>
-
-                                <div class="col-12">
-                                    <label class="form-label small fw-bold text-muted">Archivos Adjuntos</label>
-                                    <div id="drop-zone" class="drop-zone text-center p-5">
-                                        <i class="bi bi-cloud-upload display-4 text-muted mb-3 d-block"></i>
-                                        <h6 class="fw-bold text-dark">Arrastra tus archivos aquí o haz clic para buscar
-                                        </h6>
-                                        <p class="text-muted small mb-0">Soporta .PDF, .PY, .XLSX, .XLS</p>
-                                        <input type="file" id="archivosSubidos" class="file-input" multiple
-                                            accept=".pdf, .py, .xlsx, .xls" required>
+                <div class="collapse" id="panelAdmin">
+                    <div class="row g-4 mb-5">
+                        <div class="col-lg-8">
+                            <div class="card p-4 border-0 shadow-sm rounded-4">
+                                <h5 class="fw-bold mb-4"><i class="bi bi-cloud-arrow-up text-accent me-2"></i>Nuevo
+                                    Registro Técnico</h5>
+                                <form id="uploadForm">
+                                    <div class="row g-3">
+                                        <div class="col-md-7">
+                                            <label class="form-label small fw-bold">Título del Ejercicio</label>
+                                            <input type="text" id="tit" class="form-control" placeholder="..." required>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <label class="form-label small fw-bold">Materia</label>
+                                            <select id="selectMat" class="form-select" required></select>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label small fw-bold">Descripción / Detalles</label>
+                                            <textarea id="desc" class="form-control" rows="2" required></textarea>
+                                        </div>
+                                        <div class="col-12">
+                                            <div id="drop-zone" class="drop-zone p-5 text-center">
+                                                <i class="bi bi-files display-4 text-muted mb-2"></i>
+                                                <h6 class="fw-bold">Suelta cualquier archivo aquí</h6>
+                                                <p class="text-muted small">PDF, Excel, Word, AutoCAD, ZIP, Imágenes...
+                                                </p>
+                                                <input type="file" id="archivosSubidos" class="file-input" multiple
+                                                    required>
+                                            </div>
+                                            <div id="file-preview-container" class="mt-3"></div>
+                                        </div>
+                                        <div class="col-12 text-end">
+                                            <button type="submit" class="btn btn-accent px-5 py-2">Publicar
+                                                Registro</button>
+                                        </div>
                                     </div>
-                                    <div id="file-list" class="mt-2 small fw-semibold text-accent"></div>
-                                </div>
-
-                                <div class="col-12 text-end mt-2">
-                                    <button type="submit" class="btn btn-dark px-5 py-2 fw-bold shadow-sm">Guardar en
-                                        Bóveda</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card p-4 border-0 shadow-sm rounded-4 h-100">
+                                <h5 class="fw-bold mb-4"><i class="bi bi-tags text-accent me-2"></i>Nueva Materia</h5>
+                                <form id="formMateria">
+                                    <div class="mb-3">
+                                        <label class="form-label small fw-bold">Nombre de la Materia</label>
+                                        <input type="text" id="nombreMat" class="form-control"
+                                            placeholder="Ej: Puentes..." required>
+                                    </div>
+                                    <button type="submit" class="btn btn-dark w-100 fw-bold">Agregar al Menú</button>
+                                </form>
+                                <hr>
+                                <div id="lista-materias-borrar" class="mt-3">
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
 
-                <div class="row g-4 mt-1" id="grid">
-                </div>
+                <div class="row g-4" id="grid"></div>
             </div>
         </div>
     </div>
 
     <div class="modal fade" id="loginModal" tabindex="-1">
         <div class="modal-dialog modal-sm modal-dialog-centered">
-            <div class="modal-content border-0 shadow-lg border-radius-xl">
-                <div class="modal-body p-4 text-center">
-                    <div class="bg-light rounded-circle d-inline-block p-3 mb-3">
-                        <i class="bi bi-fingerprint text-dark fs-1"></i>
-                    </div>
-                    <h5 class="fw-bold text-dark mb-1">Verificar Identidad</h5>
-                    <p class="text-muted small mb-4">Acceso exclusivo para administradores.</p>
-                    <input type="password" id="pass" class="form-control my-3 text-center bg-light"
-                        placeholder="Clave: 1234">
-                    <button class="btn btn-dark w-100 fw-semibold" onclick="login()">Ingresar</button>
-                </div>
+            <div class="modal-content p-4 text-center border-0 shadow-lg rounded-4">
+                <h5 class="fw-bold mb-4">Autor Login</h5><input type="email" id="email" class="form-control mb-3"
+                    placeholder="Correo"><input type="password" id="pass" class="form-control mb-4"
+                    placeholder="Clave"><button class="btn btn-dark w-100 fw-bold" id="btnIngresar"
+                    onclick="login()">Ingresar</button>
             </div>
         </div>
     </div>
 
     <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
-        <div id="liveToast" class="toast align-items-center text-white bg-dark border-0" role="alert"
-            aria-live="assertive" aria-atomic="true">
+        <div id="liveToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive"
+            aria-atomic="true">
             <div class="d-flex">
-                <div class="toast-body fw-medium" id="toastMsg">
-                    Notificación
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                    aria-label="Close"></button>
+                <div class="toast-body fw-medium" id="toastMsg"></div><button type="button"
+                    class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
             </div>
         </div>
     </div>

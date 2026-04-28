@@ -1,14 +1,8 @@
-// ==========================================
-// 1. IMPORTACIONES DE FIREBASE (Versión 12.12.1)
-// ==========================================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-analytics.js";
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-storage.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 
-// ==========================================
-// 2. CONFIGURACIÓN DE TU PROYECTO (ELZUCO VAULT)
-// ==========================================
 const firebaseConfig = {
     apiKey: "AIzaSyBDoCi9pfNP8pj3MAyfmDiHuqGHb9naPrA",
     authDomain: "elzuco-vault-73760.firebaseapp.com",
@@ -20,295 +14,208 @@ const firebaseConfig = {
     measurementId: "G-FYMVEBL4M4"
 };
 
-// ==========================================
-// 3. INICIALIZACIÓN DE SERVICIOS
-// ==========================================
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
+const auth = getAuth(app);
 
-// ==========================================
-// VARIABLES GLOBALES
-// ==========================================
-let dbNube = [];
+let dbEjercicios = [];
+let dbMaterias = [];
 let isAdmin = false;
-let materiaActual = 'Todas';
-const CLAVE_ADMIN = "1234";
+let materiaFiltro = 'Todas';
 
-// ==========================================
-// FUNCIONES DE UTILIDAD Y UI
-// ==========================================
-function normalizarClaseCSS(texto) {
-    return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '');
-}
-
-function mostrarToast(mensaje, tipo = "bg-dark") {
-    const toastEl = document.getElementById('liveToast');
-    const toastBody = document.getElementById('toastMsg');
-    toastEl.className = `toast align-items-center text-white border-0 ${tipo}`;
-    toastBody.innerHTML = mensaje;
-    new bootstrap.Toast(toastEl).show();
-}
-
-function setEstadoCargando(cargando) {
-    const btnSubmit = document.querySelector('#uploadForm button[type="submit"]');
-    if (cargando) {
-        btnSubmit.disabled = true;
-        btnSubmit.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Subiendo a la nube...';
-    } else {
-        btnSubmit.disabled = false;
-        btnSubmit.innerHTML = 'Guardar en Bóveda';
-    }
-}
-
-// ==========================================
-// LÓGICA DE BASE DE DATOS (FIRESTORE)
-// ==========================================
-
-// Obtener los datos de Firestore y renderizarlos
-async function cargarDatosDeFirebase() {
-    try {
-        const q = query(collection(db, "ejercicios"), orderBy("timestamp", "desc"));
-        const querySnapshot = await getDocs(q);
-
-        dbNube = [];
-        querySnapshot.forEach((doc) => {
-            dbNube.push({ id: doc.id, ...doc.data() });
-        });
-
-        renderizarTarjetas(materiaActual);
-    } catch (error) {
-        console.error("Error al cargar datos:", error);
-        mostrarToast('<i class="bi bi-exclamation-triangle me-2"></i>Error al cargar base de datos', 'bg-danger');
-    }
-}
-
-// Subir nuevo registro a la nube (Firestore + Storage)
-document.getElementById('uploadForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
-
-    // CANDADO DE SEGURIDAD: Evita que se envíen datos si la sesión está cerrada
-    if (!isAdmin) {
-        mostrarToast('<i class="bi bi-shield-x me-2"></i>Error: No tienes permisos para subir archivos.', 'bg-danger');
-        return;
-    }
-
-    setEstadoCargando(true);
-
-    const archivosInput = document.getElementById('archivosSubidos').files;
-    let archivosProcesados = [];
-
-    try {
-        // 1. Subir cada archivo a Firebase Storage
-        for (let i = 0; i < archivosInput.length; i++) {
-            let file = archivosInput[i];
-            let extension = file.name.split('.').pop().toLowerCase();
-            let tipoAsignado = extension === "pdf" ? "pdf" : (extension === "py" ? "python" : (extension.includes("xls") ? "excel" : "otro"));
-
-            const nombreUnico = `${Date.now()}_${file.name}`;
-            const storageRef = ref(storage, `archivos/${tipoAsignado}/${nombreUnico}`);
-
-            await uploadBytes(storageRef, file);
-            const downloadURL = await getDownloadURL(storageRef);
-
-            archivosProcesados.push({
-                tipo: tipoAsignado,
-                nombre: file.name,
-                url: downloadURL,
-                storagePath: storageRef.fullPath
-            });
-        }
-
-        // 2. Guardar estructura de datos en Firestore Database
-        const nuevoRegistro = {
-            titulo: document.getElementById('tit').value,
-            materia: document.getElementById('mat').value,
-            descripcion: document.getElementById('desc').value,
-            dificultad: document.getElementById('dif').value,
-            fecha: new Date().toLocaleDateString('es-ES'),
-            timestamp: Date.now(),
-            archivos: archivosProcesados
-        };
-
-        await addDoc(collection(db, "ejercicios"), nuevoRegistro);
-
-        // 3. Resetear UI
-        this.reset();
-        document.getElementById('file-list').innerHTML = '';
-        bootstrap.Collapse.getInstance(document.getElementById('collapseCarga')).hide();
-        mostrarToast('<i class="bi bi-cloud-check me-2"></i>¡Guardado en la nube exitosamente!', 'bg-success');
-
-        cargarDatosDeFirebase();
-
-    } catch (error) {
-        console.error("Error subiendo archivo:", error);
-        mostrarToast('<i class="bi bi-x-circle me-2"></i>Hubo un error al subir los archivos.', 'bg-danger');
-    } finally {
-        setEstadoCargando(false);
-    }
+// --- SEGURIDAD ---
+onAuthStateChanged(auth, (user) => {
+    isAdmin = !!user;
+    document.querySelectorAll('.admin-controls').forEach(el => el.classList.toggle('d-none', !isAdmin));
+    document.getElementById('btnAdmin').classList.toggle('d-none', isAdmin);
+    document.getElementById('btnLogout').classList.toggle('d-none', !isAdmin);
+    renderizarTodo();
 });
 
-// Eliminar registro de Firestore y de Storage
-window.eliminarFalso = async function (idDocumento) {
-    if (confirm("¿Eliminar este registro de la bóveda permanentemente? Esto borrará los archivos de la nube.")) {
-        try {
-            const registro = dbNube.find(r => r.id === idDocumento);
-            // Eliminar archivos físicos primero
-            if (registro && registro.archivos) {
-                for (let archivo of registro.archivos) {
-                    if (archivo.storagePath) {
-                        const fileRef = ref(storage, archivo.storagePath);
-                        await deleteObject(fileRef).catch(e => console.log("El archivo ya no existía en el storage."));
-                    }
-                }
-            }
-
-            // Eliminar documento
-            await deleteDoc(doc(db, "ejercicios", idDocumento));
-
-            mostrarToast('<i class="bi bi-trash me-2"></i>Registro eliminado de la nube', 'bg-danger');
-            cargarDatosDeFirebase();
-        } catch (error) {
-            console.error("Error eliminando:", error);
-            mostrarToast('Error al eliminar el registro.', 'bg-danger');
-        }
-    }
+// --- ICONOS POR EXTENSIÓN ---
+function getFileIcon(filename) {
+    const ext = filename.split('.').pop().toLowerCase();
+    const map = {
+        pdf: 'bi-file-earmark-pdf text-danger',
+        xlsx: 'bi-file-earmark-excel text-success', xls: 'bi-file-earmark-excel text-success', csv: 'bi-file-earmark-excel text-success',
+        docx: 'bi-file-earmark-word text-primary', doc: 'bi-file-earmark-word text-primary',
+        dwg: 'bi-pencil-square text-warning', dxf: 'bi-pencil-square text-warning',
+        zip: 'bi-file-zip text-secondary', rar: 'bi-file-zip text-secondary', '7z': 'bi-file-zip text-secondary',
+        png: 'bi-image text-info', jpg: 'bi-image text-info', jpeg: 'bi-image text-info',
+        py: 'bi-filetype-py text-dark', js: 'bi-filetype-js text-dark'
+    };
+    return map[ext] || 'bi-file-earmark text-muted';
 }
 
-// ==========================================
-// RENDERIZADO Y NAVEGACIÓN
-// ==========================================
-window.renderizarTarjetas = function (filtro = materiaActual, terminoBusqueda = '') {
-    materiaActual = filtro;
+function mostrarToast(msg, bg = "bg-dark") {
+    const toast = document.getElementById('liveToast');
+    document.getElementById('toastMsg').innerText = msg;
+    toast.className = `toast align-items-center text-white border-0 ${bg}`;
+    new bootstrap.Toast(toast).show();
+}
+
+// --- GESTIÓN DE MATERIAS ---
+async function cargarMaterias() {
+    const snap = await getDocs(collection(db, "materias"));
+    dbMaterias = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+    // Poblar Menú Lateral
+    const menu = document.getElementById('menu-materias');
+    menu.innerHTML = dbMaterias.map(m => `
+        <a class="nav-link" onclick="filtrar('${m.nombre}')"><i class="bi bi-chevron-right small me-2"></i> ${m.nombre}</a>
+    `).join('');
+
+    // Poblar Selector del Formulario
+    const select = document.getElementById('selectMat');
+    select.innerHTML = dbMaterias.map(m => `<option>${m.nombre}</option>`).join('');
+
+    // Lista de gestión (borrar)
+    const listaBorrar = document.getElementById('lista-materias-borrar');
+    listaBorrar.innerHTML = dbMaterias.map(m => `
+        <div class="d-flex justify-content-between align-items-center mb-2 p-2 bg-light rounded">
+            <span class="small fw-bold">${m.nombre}</span>
+            <button class="btn btn-sm text-danger p-0" onclick="borrarMateria('${m.id}')"><i class="bi bi-x-circle-fill"></i></button>
+        </div>
+    `).join('');
+}
+
+document.getElementById('formMateria').onsubmit = async (e) => {
+    e.preventDefault();
+    if (!isAdmin) return;
+    const nombre = document.getElementById('nombreMat').value;
+    await addDoc(collection(db, "materias"), { nombre });
+    e.target.reset();
+    mostrarToast("Materia agregada", "bg-success");
+    cargarMaterias();
+};
+
+window.borrarMateria = async (id) => {
+    if (confirm("¿Eliminar materia?")) {
+        await deleteDoc(doc(db, "materias", id));
+        cargarMaterias();
+    }
+};
+
+// --- GESTIÓN DE ARCHIVOS ---
+async function cargarEjercicios() {
+    const q = query(collection(db, "ejercicios"), orderBy("timestamp", "desc"));
+    const snap = await getDocs(q);
+    dbEjercicios = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderizarTarjetas(materiaFiltro);
+}
+
+document.getElementById('uploadForm').onsubmit = async (e) => {
+    e.preventDefault();
+    if (!isAdmin) return;
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.disabled = true; btn.innerText = "Procesando...";
+
+    try {
+        const archivos = document.getElementById('archivosSubidos').files;
+        const procesados = [];
+        for (let file of archivos) {
+            const path = `vault/${Date.now()}_${file.name}`;
+            const sRef = ref(storage, path);
+            await uploadBytes(sRef, file);
+            procesados.push({ nombre: file.name, url: await getDownloadURL(sRef), storagePath: path });
+        }
+        await addDoc(collection(db, "ejercicios"), {
+            titulo: document.getElementById('tit').value,
+            materia: document.getElementById('selectMat').value,
+            descripcion: document.getElementById('desc').value,
+            fecha: new Date().toLocaleDateString('es-ES'),
+            timestamp: Date.now(),
+            archivos: procesados
+        });
+        e.target.reset();
+        document.getElementById('file-preview-container').innerHTML = '';
+        bootstrap.Collapse.getInstance(document.getElementById('panelAdmin')).hide();
+        mostrarToast("Publicado correctamente", "bg-success");
+        cargarEjercicios();
+    } catch (err) { mostrarToast("Error de subida", "bg-danger"); }
+    finally { btn.disabled = false; btn.innerText = "Publicar Registro"; }
+};
+
+window.eliminarEjercicio = async (id) => {
+    if (!confirm("¿Eliminar registro?")) return;
+    const item = dbEjercicios.find(x => x.id === id);
+    for (let f of item.archivos) await deleteObject(ref(storage, f.storagePath)).catch(() => { });
+    await deleteDoc(doc(db, "ejercicios", id));
+    mostrarToast("Eliminado", "bg-danger");
+    cargarEjercicios();
+};
+
+// --- RENDER ---
+function renderizarTodo() {
+    cargarMaterias();
+    cargarEjercicios();
+}
+
+window.renderizarTarjetas = (filtro = materiaFiltro, busqueda = '') => {
+    materiaFiltro = filtro;
     const grid = document.getElementById('grid');
     grid.innerHTML = '';
-
     document.getElementById('pageTitle').innerText = filtro === 'Todas' ? 'Dashboard General' : filtro;
 
-    const datosFiltrados = dbNube.filter(item => {
-        const coincideMateria = filtro === 'Todas' || item.materia === filtro;
-        const coincideBusqueda = item.titulo.toLowerCase().includes(terminoBusqueda) ||
-            item.descripcion.toLowerCase().includes(terminoBusqueda);
-        return coincideMateria && coincideBusqueda;
-    });
+    const filtrados = dbEjercicios.filter(i =>
+        (filtro === 'Todas' || i.materia === filtro) &&
+        (i.titulo.toLowerCase().includes(busqueda.toLowerCase()))
+    );
 
-    if (datosFiltrados.length === 0) {
-        grid.innerHTML = `
-        <div class="col-12 text-center py-5 mt-4">
-            <i class="bi bi-cloud-slash display-3 text-muted opacity-50 mb-3 d-block"></i>
-            <h5 class="text-dark fw-bold">Bóveda Vacía</h5>
-            <p class="text-muted">Aún no hay archivos subidos. Inicia sesión como Autor para subir el primer registro.</p>
-        </div>`;
-        return;
-    }
+    filtrados.forEach(i => {
+        const links = i.archivos.map(f => `
+            <a href="${f.url}" target="_blank" class="badge-archivo">
+                <i class="bi ${getFileIcon(f.nombre)} me-2"></i> ${f.nombre}
+            </a>
+        `).join('');
 
-    datosFiltrados.forEach((item) => {
-        const claseMateria = `bg-materia-${normalizarClaseCSS(item.materia)}`;
-        let enlacesArchivos = '';
-
-        item.archivos.forEach(archivo => {
-            if (archivo.tipo === 'pdf') {
-                enlacesArchivos += `<a href="${archivo.url}" target="_blank" class="badge-archivo text-dark" title="Abrir PDF"><i class="bi bi-file-earmark-pdf-fill text-danger"></i> ${archivo.nombre}</a>`;
-            } else if (archivo.tipo === 'python') {
-                enlacesArchivos += `<a href="${archivo.url}" target="_blank" class="badge-archivo text-dark" title="Descargar Script"><i class="bi bi-filetype-py text-primary"></i> ${archivo.nombre}</a>`;
-            } else if (archivo.tipo === 'excel') {
-                enlacesArchivos += `<a href="${archivo.url}" target="_blank" class="badge-archivo text-dark" title="Descargar Excel"><i class="bi bi-file-earmark-spreadsheet-fill text-success"></i> ${archivo.nombre}</a>`;
-            } else {
-                enlacesArchivos += `<a href="${archivo.url}" target="_blank" class="badge-archivo text-dark"><i class="bi bi-file-earmark-fill text-secondary"></i> ${archivo.nombre}</a>`;
-            }
-        });
-
-        const btnEliminar = isAdmin ? `<button class="btn btn-sm text-danger bg-light rounded-circle p-2 ms-2 lh-1" onclick="eliminarFalso('${item.id}')" title="Eliminar"><i class="bi bi-trash"></i></button>` : '';
-
-        const tarjeta = `
-        <div class="col-md-6 col-lg-6 col-xl-4">
+        grid.innerHTML += `
+        <div class="col-md-6 col-lg-4">
             <div class="card exercise-card-pro h-100">
-                <div class="card-header-pro d-flex justify-content-between align-items-center">
-                    <span class="badge ${claseMateria} px-3 py-2 rounded-pill">${item.materia}</span>
-                    <div class="d-flex align-items-center">
-                        <span class="dificultad-dot ${item.dificultad}"></span>
-                        ${btnEliminar}
-                    </div>
+                <div class="card-header-pro d-flex justify-content-between">
+                    <span class="badge bg-light text-dark border rounded-pill">${i.materia}</span>
+                    ${isAdmin ? `<button class="btn btn-sm text-danger" onclick="eliminarEjercicio('${i.id}')"><i class="bi bi-trash3"></i></button>` : ''}
                 </div>
-                <div class="card-body d-flex flex-column">
-                    <h5 class="fw-bold text-dark mb-2">${item.titulo}</h5>
-                    <p class="text-muted small mb-4 flex-grow-1">${item.descripcion}</p>
-                    <div class="archivos-disponibles mb-3">${enlacesArchivos}</div>
-                    <div class="mt-auto border-top pt-3 d-flex justify-content-between">
-                        <span class="fecha-publicacion"><i class="bi bi-calendar3 me-1"></i> ${item.fecha}</span>
-                        <span class="fecha-publicacion"><i class="bi bi-person me-1"></i> Elzuco_ing</span>
+                <div class="card-body d-flex flex-column p-4">
+                    <h5 class="fw-bold mb-2">${i.titulo}</h5>
+                    <p class="text-muted small mb-4 flex-grow-1">${i.descripcion}</p>
+                    <div class="mb-3">${links}</div>
+                    <div class="mt-auto border-top pt-3 small text-muted d-flex justify-content-between">
+                        <span><i class="bi bi-calendar-event me-1"></i> ${i.fecha}</span>
+                        <span class="fw-bold">Elzuco_ing</span>
                     </div>
                 </div>
             </div>
         </div>`;
-        grid.innerHTML += tarjeta;
     });
-}
+};
 
-// Funciones globales para que el HTML pueda llamarlas
-window.filtrar = function (materia) {
-    document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
-    event.currentTarget.classList.add('active');
-    document.getElementById('searchInput').value = '';
-    renderizarTarjetas(materia, '');
-}
+// --- INTERACCIÓN ---
+window.filtrar = (m) => {
+    document.querySelectorAll('.nav-link').forEach(n => n.classList.toggle('active', n.innerText.includes(m)));
+    renderizarTarjetas(m);
+};
 
-window.login = function () {
-    if (document.getElementById('pass').value === CLAVE_ADMIN) {
-        isAdmin = true;
-        document.querySelectorAll('.admin-controls').forEach(el => el.classList.remove('d-none'));
-        document.getElementById('btnAdmin').classList.add('d-none');
-        document.getElementById('btnLogout').classList.remove('d-none');
+window.login = async () => {
+    try {
+        await signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('pass').value);
         bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
-        document.getElementById('pass').value = '';
-        renderizarTarjetas();
-        mostrarToast('<i class="bi bi-shield-check me-2"></i>Acceso Autorizado', 'bg-success');
-    } else {
-        mostrarToast('<i class="bi bi-exclamation-octagon me-2"></i>Clave incorrecta', 'bg-danger');
-    }
-}
+    } catch { mostrarToast("Error de acceso", "bg-danger"); }
+};
+window.logout = () => signOut(auth);
 
-window.logout = function () {
-    isAdmin = false;
+document.getElementById('searchInput').oninput = (e) => renderizarTarjetas(materiaFiltro, e.target.value);
 
-    // Ocultar botones de admin y mostrar el de login
-    document.querySelectorAll('.admin-controls').forEach(el => el.classList.add('d-none'));
-    document.getElementById('btnAdmin').classList.remove('d-none');
-    document.getElementById('btnLogout').classList.add('d-none');
+// Preview de archivos al seleccionar
+document.getElementById('archivosSubidos').onchange = function () {
+    const files = Array.from(this.files);
+    document.getElementById('file-preview-container').innerHTML = files.map(f => `
+        <div class="file-preview-item">
+            <span class="small fw-bold"><i class="bi ${getFileIcon(f.name)} me-2"></i> ${f.name}</span>
+            <span class="text-muted extra-small">${(f.size / 1024).toFixed(1)} KB</span>
+        </div>
+    `).join('');
+};
 
-    // Cerrar el panel de carga si está abierto y limpiar formulario
-    const panelCarga = document.getElementById('collapseCarga');
-    if (panelCarga.classList.contains('show')) {
-        bootstrap.Collapse.getInstance(panelCarga).hide();
-    }
-    document.getElementById('uploadForm').reset();
-    document.getElementById('file-list').innerHTML = '';
-
-    renderizarTarjetas();
-    mostrarToast('<i class="bi bi-lock me-2"></i>Sesión cerrada de forma segura', 'bg-dark');
-}
-
-// Buscador
-document.getElementById('searchInput').addEventListener('input', (e) => {
-    renderizarTarjetas(materiaActual, e.target.value.toLowerCase());
-});
-
-// Drag & Drop visual
-const dropZone = document.getElementById('drop-zone');
-const fileInput = document.getElementById('archivosSubidos');
-const fileList = document.getElementById('file-list');
-
-['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => dropZone.addEventListener(eventName, e => { e.preventDefault(); e.stopPropagation(); }, false));
-['dragenter', 'dragover'].forEach(eventName => dropZone.addEventListener(eventName, () => dropZone.classList.add('dragover'), false));
-['dragleave', 'drop'].forEach(eventName => dropZone.addEventListener(eventName, () => dropZone.classList.remove('dragover'), false));
-
-fileInput.addEventListener('change', function () {
-    let nombres = Array.from(this.files).map(f => `<i class="bi bi-check2 text-success"></i> ${f.name}`).join('<br>');
-    fileList.innerHTML = nombres ? nombres : '';
-});
-
-// Al cargar la página, traer datos de Firebase
-document.addEventListener("DOMContentLoaded", () => {
-    cargarDatosDeFirebase();
-});
+document.addEventListener("DOMContentLoaded", renderizarTodo);

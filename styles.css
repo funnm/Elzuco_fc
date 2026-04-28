@@ -1,125 +1,183 @@
+/* =======================================================
+   ELZUCO VAULT PRO - ESTILOS PREMIUM
+   ======================================================= */
+
+/* Importar fuente moderna (Inter) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 :root {
-    --bg-main: #f4f7fe;
-    --sidebar-bg: #111827;
-    --sidebar-text: #f8fafc;
+    /* Paleta de Colores SaaS */
+    --bg-main: #f8fafc;
+    /* Fondo gris muy claro */
+    --sidebar-bg: #0f172a;
+    /* Azul noche profundo */
     --accent: #0ea5e9;
+    /* Celeste técnico */
+    --accent-hover: #0284c7;
     --text-dark: #1e293b;
+    /* Texto principal */
     --text-muted: #64748b;
-    --font-main: 'Inter', sans-serif;
+    /* Texto secundario */
+    --border-light: #e2e8f0;
+    /* Bordes suaves */
+    --card-bg: #ffffff;
+
+    --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
 }
 
+/* --- Reseteo Base --- */
 body {
     font-family: var(--font-main);
     background-color: var(--bg-main);
     color: var(--text-dark);
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    /* Texto más nítido */
 }
 
-/* --- Tipografía --- */
-.tracking-wider {
-    letter-spacing: 0.05em;
+/* --- Barras de Desplazamiento (Scrollbars Pro) --- */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
 }
 
-.text-accent {
-    color: var(--accent) !important;
+::-webkit-scrollbar-track {
+    background: transparent;
 }
 
-/* --- Sidebar --- */
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* ==========================================
+   1. SIDEBAR Y NAVEGACIÓN
+   ========================================== */
 #sidebar {
     width: 280px;
     background: var(--sidebar-bg);
     min-height: 100vh;
     position: fixed;
-    color: var(--sidebar-text);
-    z-index: 1000;
+    top: 0;
+    left: 0;
+    color: #fff;
+    z-index: 1040;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.05);
 }
 
 .sidebar-header {
-    padding: 35px 25px 20px;
+    padding: 35px 25px 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .nav-link {
     color: #94a3b8;
     padding: 12px 25px;
     font-weight: 500;
-    transition: 0.3s;
-    border-left: 3px solid transparent;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    border-left: 4px solid transparent;
+    cursor: pointer;
     text-decoration: none;
-    display: block;
-    margin-bottom: 4px;
-}
-
-.nav-link i {
-    margin-right: 12px;
-    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
 }
 
 .nav-link:hover,
 .nav-link.active {
     color: #fff;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.04);
     border-left-color: var(--accent);
 }
 
-.btn-outline-accent {
-    color: var(--accent);
-    border-color: var(--accent);
-}
-
-.btn-outline-accent:hover {
-    background-color: var(--accent);
-    color: #fff;
-}
-
-/* --- Layout Principal --- */
+/* ==========================================
+   2. CONTENIDO PRINCIPAL Y HEADER
+   ========================================== */
 #content {
-    padding-left: 280px;
-    width: 100%;
-}
-
-.main-container {
+    margin-left: 280px;
+    width: calc(100% - 280px);
+    min-height: 100vh;
     padding: 40px 50px;
 }
 
 .page-header {
-    margin-bottom: 40px;
+    margin-bottom: 2.5rem;
 }
 
+/* Buscador Moderno */
 .search-box input {
     border-radius: 50px;
-    border: 1px solid #e2e8f0;
-    padding: 10px 20px 10px 45px;
-    width: 300px;
+    border: 1px solid var(--border-light);
+    padding: 12px 20px 12px 45px;
+    width: 320px;
     background: #fff;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+    font-size: 0.95rem;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s;
 }
 
 .search-box input:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
 }
 
-/* --- Panel de Carga y Drag&Drop --- */
+/* ==========================================
+   3. PANEL DE ADMINISTRACIÓN Y FORMULARIOS
+   ========================================== */
+.card,
 .panel-carga {
-    background: #fff;
-    padding: 35px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
     border-radius: 16px;
-    margin-bottom: 30px;
-    border: 1px solid #e2e8f0;
+    box-shadow: var(--shadow-md);
 }
 
+/* Inputs Premium */
+.form-control,
+.form-select {
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-size: 0.95rem;
+    background-color: #f8fafc;
+    transition: all 0.2s;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: #fff;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
+}
+
+/* Zona de Arrastrar y Soltar */
 .drop-zone {
     border: 2px dashed #cbd5e1;
-    border-radius: 12px;
-    background-color: #f8fafc;
-    position: relative;
-    transition: all 0.3s ease;
+    border-radius: 16px;
+    background: #f8fafc;
     cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
+.drop-zone:hover,
 .drop-zone.dragover {
     border-color: var(--accent);
-    background-color: #f0f9ff;
+    background: #f0f9ff;
 }
 
 .file-input {
@@ -132,108 +190,138 @@ body {
     cursor: pointer;
 }
 
-/* --- Tarjetas Pro --- */
+/* ==========================================
+   4. TARJETAS DE EJERCICIOS (GRID)
+   ========================================== */
 .exercise-card-pro {
     border-radius: 16px;
-    background: #ffffff;
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid #f1f5f9;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .exercise-card-pro:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+    border-color: #bae6fd;
 }
 
 .card-header-pro {
-    padding: 24px 24px 0 24px;
+    padding: 24px 24px 0;
+    border: none;
     background: transparent;
-    border-bottom: none;
 }
 
 .card-body {
-    padding: 24px;
+    padding: 20px 24px 24px;
 }
 
-/* Colores Dinámicos Normalizados */
-.bg-materia-AnalisisEstructural {
-    background-color: #e0f2fe;
-    color: #0369a1;
+/* Truncar descripciones largas (Para que todas las tarjetas midan igual) */
+.exercise-card-pro p.text-muted {
+    display: -webkit-box;
+    line-clamp: 3;
+    /* Corta en la línea 3 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.5;
+    margin-bottom: 1.5rem !important;
+}
+
+/* Etiquetas (Badges) de Materias */
+.badge {
     font-weight: 600;
+    letter-spacing: 0.3px;
+    padding: 8px 14px;
 }
 
-.bg-materia-MecanicadeSuelos {
-    background-color: #fef08a;
-    color: #854d0e;
-    font-weight: 600;
-}
-
-.bg-materia-MecanicadeFluidos {
-    background-color: #dcfce7;
-    color: #166534;
-    font-weight: 600;
-}
-
-.bg-materia-ResistenciadeMaterialesII {
-    background-color: #fce7f3;
-    color: #9d174d;
-    font-weight: 600;
-}
-
-/* Dificultad */
-.dificultad-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    display: inline-block;
-}
-
-.dificultad-dot.basico {
-    background-color: #22c55e;
-    box-shadow: 0 0 5px #22c55e;
-}
-
-.dificultad-dot.intermedio {
-    background-color: #f59e0b;
-    box-shadow: 0 0 5px #f59e0b;
-}
-
-.dificultad-dot.avanzado {
-    background-color: #ef4444;
-    box-shadow: 0 0 5px #ef4444;
-}
-
-/* Botones de Descarga Interactivos */
-.archivos-disponibles .badge-archivo {
+/* Badges de Archivos (Botones de descarga) */
+.badge-archivo {
     font-weight: 500;
-    padding: 8px 12px;
-    border-radius: 8px;
+    padding: 8px 14px;
+    border-radius: 10px;
     text-decoration: none;
-    transition: all 0.2s ease;
-    cursor: pointer;
     display: inline-flex;
     align-items: center;
+    background: #f1f5f9;
+    color: var(--text-dark);
+    border: 1px solid var(--border-light);
     margin-bottom: 8px;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    margin-right: 8px;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
 }
 
-.archivos-disponibles .badge-archivo i {
-    font-size: 1.1rem;
-    margin-right: 6px;
-}
-
-.archivos-disponibles .badge-archivo:hover {
-    background-color: #fff !important;
-    border-color: #cbd5e1 !important;
+.badge-archivo:hover {
+    background: #fff;
+    border-color: var(--accent);
+    color: var(--accent);
     transform: translateY(-2px);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
-.fecha-publicacion {
-    font-size: 0.75rem;
-    color: #94a3b8;
-    display: flex;
-    align-items: center;
+/* ==========================================
+   5. BOTONES Y MODALES
+   ========================================== */
+.btn-accent {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    border-radius: 10px;
+    transition: all 0.2s;
+}
+
+.btn-accent:hover {
+    background: var(--accent-hover);
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+}
+
+/* Modales redondeados */
+.modal-content {
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* ==========================================
+   6. RESPONSIVE DESIGN (MÓVILES Y TABLETS)
+   ========================================== */
+@media (max-width: 992px) {
+    #sidebar {
+        transform: translateX(-100%);
+        /* Oculta la barra lateral */
+    }
+
+    #content {
+        margin-left: 0;
+        width: 100%;
+        padding: 20px;
+        /* Reduce los bordes en móviles */
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: stretch !important;
+    }
+
+    .search-box input {
+        width: 100%;
+        /* Buscador ancho completo en móviles */
+    }
+
+    .admin-controls {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .admin-controls button {
+        width: 100%;
+        /* Botón subir ancho completo */
+    }
 }
