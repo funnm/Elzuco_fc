@@ -4,7 +4,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "http
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDEJP8rURTn0pYWy5iIfM87JmjXdRTZ15g",
+    apiKey: "AIzaSyCSUSnyxUGuqTBUY3JNgiu7ztTY-1VBrY0",
     authDomain: "elzuco-vault-73760.firebaseapp.com",
     projectId: "elzuco-vault-73760",
     storageBucket: "elzuco-vault-73760.firebasestorage.app",
