@@ -39,27 +39,20 @@ overlay.addEventListener('click', toggleMenu);
 onAuthStateChanged(auth, (user) => {
     isAdmin = !!user;
 
-    // Mostrar u ocultar botones de administración
     document.querySelectorAll('.admin-controls').forEach(el => el.classList.toggle('d-none', !isAdmin));
     document.getElementById('btnAdmin').classList.toggle('d-none', isAdmin);
     document.getElementById('btnLogout').classList.toggle('d-none', !isAdmin);
 
-    // CORRECCIÓN DEL BUG: Cerrar el panel automáticamente si se cierra la sesión
     if (!isAdmin) {
         const panelAdmin = document.getElementById('panelAdmin');
-        // Si el panel está abierto (tiene la clase 'show')
         if (panelAdmin && panelAdmin.classList.contains('show')) {
-            // Obtenemos la instancia de Bootstrap y lo cerramos
             const bsCollapse = bootstrap.Collapse.getInstance(panelAdmin) || new bootstrap.Collapse(panelAdmin, { toggle: false });
             bsCollapse.hide();
         }
-
-        // Limpiamos los formularios por seguridad
         document.getElementById('uploadForm').reset();
         document.getElementById('formMateria').reset();
         document.getElementById('file-preview-container').innerHTML = '';
     }
-
     renderizarTodo();
 });
 
@@ -67,10 +60,11 @@ function getFileIcon(filename) {
     const ext = filename.split('.').pop().toLowerCase();
     const map = {
         pdf: 'bi-file-earmark-pdf-fill text-danger',
-        xlsx: 'bi-file-earmark-excel-fill text-success', xls: 'bi-file-earmark-excel-fill text-success',
-        dwg: 'bi-pencil-square text-warning', zip: 'bi-file-zip-fill text-secondary',
-        png: 'bi-image-fill text-info', jpg: 'bi-image-fill text-info',
-        py: 'bi-filetype-py text-dark', docx: 'bi-file-earmark-word-fill text-primary'
+        xlsx: 'bi-file-earmark-excel-fill text-success', xls: 'bi-file-earmark-excel-fill text-success', csv: 'bi-file-earmark-spreadsheet-fill text-success',
+        dwg: 'bi-pencil-square text-warning', dxf: 'bi-pencil-square text-warning',
+        zip: 'bi-file-zip-fill text-secondary', rar: 'bi-file-zip-fill text-secondary',
+        png: 'bi-image-fill text-info', jpg: 'bi-image-fill text-info', jpeg: 'bi-image-fill text-info',
+        py: 'bi-filetype-py text-dark', docx: 'bi-file-earmark-word-fill text-primary', doc: 'bi-file-earmark-word-fill text-primary'
     };
     return map[ext] || 'bi-file-earmark-fill text-muted';
 }
@@ -176,6 +170,85 @@ window.eliminarEjercicio = async (id) => {
     cargarEjercicios();
 };
 
+window.prepararEdicion = (id) => {
+    const item = dbEjercicios.find(x => x.id === id);
+    if (!item) return;
+    document.getElementById('editId').value = item.id;
+    document.getElementById('editTit').value = item.titulo;
+    document.getElementById('editMat').value = item.materia;
+    document.getElementById('editDesc').value = item.descripcion;
+    new bootstrap.Modal(document.getElementById('editModal')).show();
+};
+
+document.getElementById('editForm').onsubmit = async (e) => {
+    e.preventDefault();
+    if (!isAdmin) return;
+    const id = document.getElementById('editId').value;
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.disabled = true;
+
+    try {
+        await updateDoc(doc(db, "ejercicios", id), {
+            titulo: document.getElementById('editTit').value,
+            materia: document.getElementById('editMat').value,
+            descripcion: document.getElementById('editDesc').value
+        });
+        bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
+        mostrarToast("<i class='bi bi-pencil-square me-2'></i>Actualizado", "bg-success");
+        cargarEjercicios();
+    } catch (err) { mostrarToast("Error al actualizar", "bg-danger"); }
+    finally { btn.disabled = false; }
+};
+
+// ============================================================================
+// NUEVO: VISOR INTEGRADO DE ARCHIVOS EN LA MISMA PÁGINA
+// ============================================================================
+window.abrirVisor = function (url, nombre) {
+    const ext = nombre.split('.').pop().toLowerCase();
+    const titulo = document.getElementById('visorTitulo');
+    const contenido = document.getElementById('visorContenido');
+    const btnDescargar = document.getElementById('btnDescargarVisor');
+
+    // Configurar Modal
+    titulo.innerHTML = `<i class="bi ${getFileIcon(nombre)} me-2"></i> ${nombre}`;
+    btnDescargar.href = url;
+
+    // Configurar el visor según el tipo de archivo
+    let html = '';
+
+    // 1. Visor de Imágenes
+    if (['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp'].includes(ext)) {
+        html = `<div class="d-flex align-items-center justify-content-center h-100 p-3">
+                    <img src="${url}" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px;">
+                </div>`;
+    }
+    // 2. Visor de Documentos de Office (Usando Google Docs Viewer)
+    else if (['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'].includes(ext)) {
+        const viewerUrl = `https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true`;
+        html = `<iframe src="${viewerUrl}" width="100%" height="100%" frameborder="0"></iframe>`;
+    }
+    // 3. Visor de PDF y Archivos de Código
+    else if (['pdf', 'py', 'js', 'html', 'css', 'json', 'txt'].includes(ext)) {
+        html = `<iframe src="${url}" width="100%" height="100%" frameborder="0" style="background: white;"></iframe>`;
+    }
+    // 4. Formatos NO compatibles web (ZIP, DWG, RAR...)
+    else {
+        html = `
+        <div class="d-flex flex-column align-items-center justify-content-center h-100 text-center p-5">
+            <i class="bi ${getFileIcon(nombre)} display-1 text-muted mb-4 opacity-50"></i>
+            <h4 class="fw-bold text-dark mb-2">Vista previa no disponible</h4>
+            <p class="text-muted mb-4">El formato de este archivo (.${ext.toUpperCase()}) no se puede previsualizar directamente en el navegador.</p>
+            <a href="${url}" target="_blank" download class="btn btn-accent rounded-pill px-5 py-2 fw-bold">
+                <i class="bi bi-cloud-arrow-down-fill me-2"></i>Descargar Archivo Seguro
+            </a>
+        </div>`;
+    }
+
+    contenido.innerHTML = html;
+    new bootstrap.Modal(document.getElementById('visorModal')).show();
+};
+
+
 window.renderizarTarjetas = (filtro = materiaFiltro, busqueda = '') => {
     materiaFiltro = filtro;
     const grid = document.getElementById('grid');
@@ -194,14 +267,25 @@ window.renderizarTarjetas = (filtro = materiaFiltro, busqueda = '') => {
 
     filtrados.forEach(i => {
         const bgClass = "bg-light text-dark border";
-        const links = i.archivos.map(f => `<a href="${f.url}" target="_blank" class="badge-archivo"><i class="bi ${getFileIcon(f.nombre)} me-2"></i> ${f.nombre}</a>`).join('');
+
+        // MODIFICADO: Ahora los botones llaman a la función abrirVisor() en lugar de redirigir
+        const links = i.archivos.map(f => `
+            <a onclick="abrirVisor('${f.url}', '${f.nombre}')" class="badge-archivo" style="cursor: pointer;" title="Previsualizar ${f.nombre}">
+                <i class="bi ${getFileIcon(f.nombre)} me-2"></i> ${f.nombre}
+            </a>
+        `).join('');
 
         grid.innerHTML += `
         <div class="col-12 col-md-6 col-xxl-4">
             <div class="card exercise-card-pro h-100 p-4">
                 <div class="d-flex justify-content-between align-items-start mb-3">
                     <span class="badge ${bgClass} rounded-pill px-3 py-2 shadow-sm">${i.materia}</span>
-                    ${isAdmin ? `<button class="btn btn-sm btn-outline-danger border-0" onclick="eliminarEjercicio('${i.id}')" title="Borrar"><i class="bi bi-trash3-fill"></i></button>` : ''}
+                    ${isAdmin ? `
+                        <div>
+                            <button class="btn btn-sm btn-outline-primary border-0 me-1" onclick="prepararEdicion('${i.id}')" title="Editar"><i class="bi bi-pencil-square"></i></button>
+                            <button class="btn btn-sm btn-outline-danger border-0" onclick="eliminarEjercicio('${i.id}')" title="Borrar"><i class="bi bi-trash3-fill"></i></button>
+                        </div>
+                    ` : ''}
                 </div>
                 <h5 class="fw-bold text-dark mb-2">${i.titulo}</h5>
                 <p class="text-muted small mb-4 flex-grow-1" style="line-height:1.6">${i.descripcion}</p>

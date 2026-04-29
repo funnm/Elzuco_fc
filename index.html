@@ -4,12 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Elzuco_ing | Engineering Vault Pro</title>
+    <meta name="description"
+        content="Repositorio digital de ingeniería civil. Descarga memorias de cálculo, scripts de automatización en Python, plantillas Excel y ejercicios resueltos de Análisis Estructural, Mecánica de Suelos, Hidráulica y Resistencia de Materiales II.">
+    <meta name="keywords"
+        content="ingeniería civil, resistencia de materiales II, análisis estructural, mecánica de suelos, métodos matriciales, scripts python ingeniería, plantillas excel ingeniería, elzuco_ing">
+    <meta name="author" content="Elzuco_ing">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:title" content="Engineering Vault Pro | Elzuco_ing">
+    <meta property="og:description"
+        content="Accede a nuestra bóveda técnica: ejercicios resueltos, automatización y normativas para estudiantes y profesionales de la ingeniería.">
+    <meta property="og:image" content="https://elzucofc.lat//img/portada-vault.jpg">
+    <meta property="og:url" content="https://elzucofc.lat/">
+    <meta property="og:type" content="website">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5153356459824383"
+        crossorigin="anonymous"></script>
     <style>
         /* =======================================================
            ESTILOS PREMIUM Y RESPONSIVOS (SaaS Dashboard)
@@ -154,6 +170,7 @@
             transition: 0.2s;
             margin: 0 6px 6px 0;
             font-size: 0.85rem;
+            user-select: none;
         }
 
         .badge-archivo:hover {
@@ -475,6 +492,14 @@
                             </div>
                         </div>
 
+                        <div class="col-6 col-lg-2 ms-auto">
+                            <h6 class="footer-title">Categorías</h6>
+                            <a class="footer-link" onclick="filtrar('Análisis Estructural')">Análisis Estructural</a>
+                            <a class="footer-link" onclick="filtrar('Mecánica de Suelos')">Mecánica de Suelos</a>
+                            <a class="footer-link" onclick="filtrar('Hidráulica')">Hidráulica</a>
+                            <a class="footer-link" onclick="filtrar('Resistencia')">Resistencia de Materiales</a>
+                        </div>
+
                         <div class="col-6 col-lg-2">
                             <h6 class="footer-title">Ayuda y Legal</h6>
                             <a href="mailto:elzucoing2002@gmail.com?subject=Soporte%20Vault%20Pro"
@@ -547,6 +572,28 @@
                                 Cambios</button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="visorModal" tabindex="-1">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4 p-2">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="fw-bold text-dark mb-0 text-truncate" id="visorTitulo" style="max-width: 90%;"><i
+                            class="bi bi-eye text-accent me-2"></i>Visor de Archivos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0 mt-3" id="visorContenido"
+                    style="height: 75vh; background: #f8fafc; border-radius: 12px; overflow: hidden; position: relative;">
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-light rounded-pill px-4"
+                        data-bs-dismiss="modal">Cerrar</button>
+                    <a id="btnDescargarVisor" href="#" target="_blank" download class="btn btn-dark rounded-pill px-4">
+                        <i class="bi bi-cloud-arrow-down-fill me-2"></i>Descargar Original
+                    </a>
                 </div>
             </div>
         </div>
