@@ -268,12 +268,14 @@ window.renderizarTarjetas = (filtro = materiaFiltro, busqueda = '') => {
     filtrados.forEach(i => {
         const bgClass = "bg-light text-dark border";
 
-        // MODIFICADO: Ahora los botones llaman a la función abrirVisor() en lugar de redirigir
         const links = i.archivos.map(f => `
             <a onclick="abrirVisor('${f.url}', '${f.nombre}')" class="badge-archivo" style="cursor: pointer;" title="Previsualizar ${f.nombre}">
                 <i class="bi ${getFileIcon(f.nombre)} me-2"></i> ${f.nombre}
             </a>
         `).join('');
+
+        // MODIFICADO: Lógica para saber si la descripción es larga
+        const necesitaBoton = i.descripcion.length > 150;
 
         grid.innerHTML += `
         <div class="col-12 col-md-6 col-xxl-4">
@@ -288,7 +290,17 @@ window.renderizarTarjetas = (filtro = materiaFiltro, busqueda = '') => {
                     ` : ''}
                 </div>
                 <h5 class="fw-bold text-dark mb-2">${i.titulo}</h5>
-                <p class="text-muted small mb-4 flex-grow-1" style="line-height:1.6">${i.descripcion}</p>
+                
+                <!-- MODIFICADO: Contenedor de la descripción con el botón "Ver más" -->
+                <div class="mb-4 flex-grow-1">
+                    <p class="text-muted small mb-0" id="desc-${i.id}" style="line-height:1.6">
+                        ${i.descripcion}
+                    </p>
+                    ${necesitaBoton ? `
+                        <a href="javascript:void(0)" class="btn-ver-mas" onclick="toggleDescripcion('${i.id}')" id="btn-${i.id}">Ver más</a>
+                    ` : ''}
+                </div>
+
                 <div class="mb-3 d-flex flex-wrap">${links}</div>
                 <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center small text-muted">
                     <span class="fw-medium"><i class="bi bi-calendar2-event me-2"></i>${i.fecha}</span>
@@ -323,6 +335,20 @@ window.login = async () => {
 window.logout = async () => {
     await signOut(auth);
     mostrarToast("<i class='bi bi-power me-2'></i>Sesión cerrada de forma segura", "bg-dark");
+};
+
+// MODIFICADO: Nueva función para alternar la clase "expanded" de la descripción
+window.toggleDescripcion = (id) => {
+    const texto = document.getElementById(`desc-${id}`);
+    const btn = document.getElementById(`btn-${id}`);
+    
+    if (texto.classList.contains('expanded')) {
+        texto.classList.remove('expanded');
+        btn.innerText = 'Ver más';
+    } else {
+        texto.classList.add('expanded');
+        btn.innerText = 'Ver menos';
+    }
 };
 
 function renderizarTodo() { cargarMaterias(); cargarEjercicios(); }

@@ -149,12 +149,34 @@
             border-color: #bae6fd;
         }
 
+        /* MODIFICADO: Estilos para el truncado de texto y botón "Ver más" */
         .exercise-card-pro p.text-muted {
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
             line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .exercise-card-pro p.text-muted.expanded {
+            display: block;
+            overflow: visible;
+            -webkit-line-clamp: unset;
+        }
+
+        .btn-ver-mas {
+            color: var(--accent);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .btn-ver-mas:hover {
+            text-decoration: underline;
         }
 
         .badge-archivo {
